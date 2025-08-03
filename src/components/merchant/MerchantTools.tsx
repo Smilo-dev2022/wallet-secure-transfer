@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,23 +8,38 @@ import { ArrowLeft, Store, QrCode, BarChart3, Settings } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/lib/supabase';
 
+interface MerchantAccount {
+  id: string;
+  businessName: string;
+  businessType: string;
+  registrationNumber: string;
+  status: string;
+}
+
+interface Transaction {
+  id: string;
+  amount: number;
+  created_at: string;
+  status: string;
+}
+
 interface MerchantToolsProps {
   onBack: () => void;
 }
 
 export const MerchantTools: React.FC<MerchantToolsProps> = ({ onBack }) => {
-  const [merchantAccount, setMerchantAccount] = useState<any>(null);
+  const [merchantAccount, setMerchantAccount] = useState<MerchantAccount | null>(null);
   const [businessName, setBusinessName] = useState('');
   const [businessType, setBusinessType] = useState('');
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [loading, setLoading] = useState(false);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
     loadMerchantAccount();
     loadTransactions();
-  }, []);
+  }, [loadTransactions]);
 
   const loadMerchantAccount = async () => {
     try {
@@ -48,7 +63,7 @@ export const MerchantTools: React.FC<MerchantToolsProps> = ({ onBack }) => {
     }
   };
 
-  const loadTransactions = async () => {
+  const loadTransactions = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -63,7 +78,7 @@ export const MerchantTools: React.FC<MerchantToolsProps> = ({ onBack }) => {
     } catch (error) {
       console.error('Error loading transactions:', error);
     }
-  };
+  }, [setTransactions]);
 
   const createMerchantAccount = async () => {
     if (!businessName || !businessType) {
@@ -274,7 +289,7 @@ export const MerchantTools: React.FC<MerchantToolsProps> = ({ onBack }) => {
                   
                   <div className="space-y-2">
                     <h3 className="font-semibold">Recent Transactions</h3>
-                    {transactions.slice(0, 5).map((tx: any) => (
+                    {transactions.slice(0, 5).map((tx: Transaction) => (
                       <div key={tx.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
                         <span className="text-sm">R {tx.amount}</span>
                         <span className="text-xs text-gray-500">{new Date(tx.created_at).toLocaleDateString()}</span>

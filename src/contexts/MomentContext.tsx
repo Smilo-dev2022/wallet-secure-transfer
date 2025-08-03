@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { momentApi } from '../services/momentApi';
 import { MomentCustomer, MomentPayment, CreatePaymentRequest } from '../types/moment';
 import { useAuth } from './AuthContext';
@@ -22,13 +22,18 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (user) {
-      initializeCustomer();
+  const refreshPayments = useCallback(async () => {
+    if (!customer) return;
+    
+    try {
+      const paymentsData = await momentApi.getPayments(customer.id);
+      setPayments(paymentsData);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch payments');
     }
-  }, [user]);
+  }, [customer]);
 
-  const initializeCustomer = async () => {
+  const initializeCustomer = useCallback(async () => {
     if (!user) return;
     
     setIsLoading(true);
@@ -36,7 +41,7 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     
     try {
       // Try to get existing customer or create new one
-      let customerData = await momentApi.createCustomer({
+      const customerData = await momentApi.createCustomer({
         email: user.email,
         name: user.name,
         metadata: { localUserId: user.id, role: user.role }
@@ -49,7 +54,13 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, refreshPayments]);
+
+  useEffect(() => {
+    if (user) {
+      initializeCustomer();
+    }
+  }, [user, initializeCustomer]);
 
   const createPayment = async (paymentData: CreatePaymentRequest): Promise<MomentPayment | null> => {
     setIsLoading(true);
@@ -64,17 +75,6 @@ export const MomentProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       return null;
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const refreshPayments = async () => {
-    if (!customer) return;
-    
-    try {
-      const paymentsData = await momentApi.getPayments(customer.id);
-      setPayments(paymentsData);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch payments');
     }
   };
 

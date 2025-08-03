@@ -1,3 +1,5 @@
+import { CreateCustomerRequest, CreatePaymentRequest } from '@/types/moment';
+
 // Moment.co API service functions
 const MOMENT_API_BASE_URL = 'https://api.momentco.io';
 
@@ -40,7 +42,7 @@ class MomentApiService {
     return this.makeRequest('/billing/customers');
   }
 
-  async createCustomer(customerData: any) {
+  async createCustomer(customerData: CreateCustomerRequest) {
     return this.makeRequest('/billing/customers', {
       method: 'POST',
       body: JSON.stringify(customerData),
@@ -51,7 +53,7 @@ class MomentApiService {
     return this.makeRequest(`/billing/customers/${customerId}`);
   }
 
-  async createPayment(paymentData: any) {
+  async createPayment(paymentData: CreatePaymentRequest) {
     return this.makeRequest('/billing/payments', {
       method: 'POST',
       body: JSON.stringify(paymentData),
