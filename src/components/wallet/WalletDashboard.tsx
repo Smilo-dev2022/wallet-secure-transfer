@@ -1,61 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWallet } from '@/contexts/WalletContext';
+import { useNavigate } from 'react-router-dom';
 import { 
   Wallet, Send, History, Bitcoin, TrendingUp, 
   Brain, QrCode, Shield, Receipt, Globe, 
-  Store, BarChart3, Gift, ArrowLeft 
+  Store, BarChart3, Gift
 } from 'lucide-react';
 
 export const WalletDashboard: React.FC = () => {
   const { user } = useAuth();
   const { balance } = useWallet();
-  const [currentView, setCurrentView] = useState<string>('dashboard');
+  const navigate = useNavigate();
 
   const features = [
-    { id: 'send', icon: Send, title: 'Send Money', description: 'Transfer funds instantly' },
-    { id: 'history', icon: History, title: 'Transaction History', description: 'View all transactions' },
-    { id: 'crypto', icon: Bitcoin, title: 'Crypto Portfolio', description: 'Trade cryptocurrencies' },
-    { id: 'investments', icon: TrendingUp, title: 'Investments', description: 'Grow your wealth' },
-    { id: 'ai-advisor', icon: Brain, title: 'AI Financial Advisor', description: 'Get smart advice' },
-    { id: 'qr-payment', icon: QrCode, title: 'QR Payments', description: 'Scan & pay instantly' },
-    { id: 'security', icon: Shield, title: 'Security Center', description: 'Protect your account' },
-    { id: 'bills', icon: Receipt, title: 'Bill Payments', description: 'Pay utilities & bills' },
-    { id: 'international', icon: Globe, title: 'International Transfer', description: 'Send money globally' },
-    { id: 'merchant', icon: Store, title: 'Merchant Tools', description: 'Business solutions' },
-    { id: 'analytics', icon: BarChart3, title: 'Analytics', description: 'Financial insights' },
-    { id: 'vouchers', icon: Gift, title: 'Vouchers', description: 'Create & redeem vouchers' }
+    { id: 'send', icon: Send, title: 'Send Money', description: 'Transfer funds instantly', path: '/send' },
+    { id: 'history', icon: History, title: 'Transaction History', description: 'View all transactions', path: '/history' },
+    { id: 'crypto', icon: Bitcoin, title: 'Crypto Portfolio', description: 'Trade cryptocurrencies', path: '/crypto' },
+    { id: 'investments', icon: TrendingUp, title: 'Investments', description: 'Grow your wealth', path: '/investments' },
+    { id: 'ai-advisor', icon: Brain, title: 'AI Financial Advisor', description: 'Get smart advice', path: '/ai-advisor' },
+    { id: 'qr-payment', icon: QrCode, title: 'QR Payments', description: 'Scan & pay instantly', path: '/qr-payment' },
+    { id: 'security', icon: Shield, title: 'Security Center', description: 'Protect your account', path: '/security' },
+    { id: 'bills', icon: Receipt, title: 'Bill Payments', description: 'Pay utilities & bills', path: '/bills' },
+    { id: 'international', icon: Globe, title: 'International Transfer', description: 'Send money globally', path: '/international' },
+    { id: 'merchant', icon: Store, title: 'Merchant Tools', description: 'Business solutions', path: '/merchant' },
+    { id: 'analytics', icon: BarChart3, title: 'Analytics', description: 'Financial insights', path: '/analytics' },
+    { id: 'vouchers', icon: Gift, title: 'Vouchers', description: 'Create & redeem vouchers', path: '/vouchers' }
   ];
-
-  const renderFeature = (featureId: string) => {
-    const SimpleFeature = ({ title }: { title: string }) => (
-      <div className="min-h-screen ikasi-gradient p-4">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center mb-6">
-            <Button variant="ghost" size="sm" onClick={() => setCurrentView('dashboard')} className="mr-2 text-white">
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <h1 className="text-2xl font-bold text-white">{title}</h1>
-          </div>
-          <Card>
-            <CardContent className="p-8 text-center">
-              <p className="text-gray-600 mb-4">Feature coming soon!</p>
-              <p className="text-sm text-gray-500">This feature is currently in development.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    );
-
-    return <SimpleFeature title={features.find(f => f.id === featureId)?.title || 'Feature'} />;
-  };
-
-  if (currentView !== 'dashboard') {
-    return renderFeature(currentView);
-  }
 
   return (
     <div className="min-h-screen ikasi-gradient p-4">
@@ -88,7 +61,7 @@ export const WalletDashboard: React.FC = () => {
               <Card 
                 key={feature.id} 
                 className="cursor-pointer hover:shadow-lg transition-shadow bg-white/95 backdrop-blur"
-                onClick={() => setCurrentView(feature.id)}
+                onClick={() => navigate(feature.path)}
               >
                 <CardContent className="p-4 text-center">
                   <Icon className="h-8 w-8 mx-auto mb-2 text-orange-500" />

@@ -15,9 +15,13 @@ import { AnalyticsDashboard } from './analytics/AnalyticsDashboard';
 import { LoginForm } from './auth/LoginForm';
 import { RegisterForm } from './auth/RegisterForm';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export function WalletApp() {
   const { user, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBack = () => navigate('/');
 
   if (isLoading) {
     return (
@@ -56,8 +60,8 @@ export function WalletApp() {
     <AppLayout>
       <Routes>
         <Route path="/" element={<WalletDashboard />} />
-        <Route path="/send" element={<SendMoney />} />
-        <Route path="/history" element={<TransactionHistory />} />
+        <Route path="/send" element={<SendMoney onBack={handleBack} />} />
+        <Route path="/history" element={<TransactionHistory onBack={handleBack} />} />
         <Route path="/crypto" element={<CryptoPortfolio />} />
         <Route path="/investments" element={<InvestmentDashboard />} />
         <Route path="/ai-advisor" element={<AIFinancialAdvisor />} />
