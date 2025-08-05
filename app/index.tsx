@@ -25,6 +25,11 @@ export default function Index() {
           <Text style={styles.buttonText}>Go to Signup</Text>
         </Link>
       </Pressable>
+      <Pressable style={styles.button}>
+        <Link href={"/components/Dashboard"} style={styles.link}>
+          <Text style={styles.buttonText}>Go to Dashboard</Text>
+        </Link>
+      </Pressable>
     </View>
   );
 }

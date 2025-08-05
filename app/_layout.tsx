@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="components/SplashPage" options={{ headerShown: false }} />
         <Stack.Screen name="components/Login" options={{ headerShown: false }} />
         <Stack.Screen name="components/Signup" options={{ headerShown: false }} />
+        <Stack.Screen name="components/Dashboard" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaProvider>
   );
