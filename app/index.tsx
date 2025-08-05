@@ -11,11 +11,20 @@ export default function Index() {
       }}
     >
       <Pressable style={styles.button}>
-        <Link href={'/components/SplashPage'} style={styles.link}>
-         <Text style={styles.buttonText}>Go to Splash</Text>
+        <Link href={"/components/SplashPage"} style={styles.link}>
+          <Text style={styles.buttonText}>Go to Splash</Text>
         </Link>
       </Pressable>
-      
+      <Pressable style={styles.button}>
+        <Link href={"/components/Login"} style={styles.link}>
+          <Text style={styles.buttonText}>Go to Login</Text>
+        </Link>
+      </Pressable>
+      <Pressable style={styles.button}>
+        <Link href={"/components/Signup"} style={styles.link}>
+          <Text style={styles.buttonText}>Go to Signup</Text>
+        </Link>
+      </Pressable>
     </View>
   );
 }
@@ -36,6 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "rgba(0, 0, 0, 0.75)",
     padding: 6,
+    marginBottom: 15,
   },
   buttonText: {
     color: "white",
