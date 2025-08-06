@@ -1,7 +1,22 @@
-import { Text, View, Pressable, StyleSheet } from "react-native";
-import { Link } from "expo-router";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
+import supabase from "./lib/supabase";
+import { Session } from "@supabase/supabase-js";
+import Dashboard from "./Dashboard";
 
 export default function Index() {
+  const [session, setSession] = useState<Session | null>(null)
+
+   useEffect(() => {
+    supabase.auth.getSession().then(({ data: {session} }) => {
+      setSession(session)
+    })
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+   }, [])
+
   return (
     <View
       style={{
@@ -10,58 +25,9 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Pressable style={styles.button}>
-        <Link href={"./SplashPage"} style={styles.link}>
-          <Text style={styles.buttonText}>Go to Splash</Text>
-        </Link>
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Link href={"/Login"} style={styles.link}>
-          <Text style={styles.buttonText}>Go to Login</Text>
-        </Link>
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Link href={"/Signup"} style={styles.link}>
-          <Text style={styles.buttonText}>Go to Signup</Text>
-        </Link>
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Link href={"/Dashboard"} style={styles.link}>
-          <Text style={styles.buttonText}>Go to Dashboard</Text>
-        </Link>
-      </Pressable>
-      <Pressable style={styles.button}>
-        <Link href={"/About"} style={styles.link}>
-          <Text style={styles.buttonText}>Go to About</Text>
-        </Link>
-      </Pressable>
+      <View>
+        { session && session.user && <Dashboard /> }
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  link: {
-    color: "white",
-    fontSize: 42,
-    fontWeight: "bold",
-    textAlign: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    textDecorationLine: "underline",
-    padding: 4,
-  },
-  button: {
-    height: 60,
-    borderRadius: 20,
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-    padding: 6,
-    marginBottom: 15,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-    padding: 4,
-  },
-});
