@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const signupStyles = StyleSheet.create({
+const signupStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#0082ff",
@@ -50,3 +50,5 @@ export const signupStyles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default signupStyles

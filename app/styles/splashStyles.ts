@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width } = Dimensions.get('window');
 const CIRCLE_SIZE = width * 0.7;
 
-export const splashStyles = StyleSheet.create({
+const splashStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0082ff',
@@ -27,3 +27,5 @@ export const splashStyles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default splashStyles

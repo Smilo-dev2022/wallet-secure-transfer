@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const dashBoardStyles = StyleSheet.create({
+const dashBoardStyles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#1E3A8A",
@@ -162,3 +162,5 @@ footer: {
     color: "black",
   },
 });
+
+export default dashBoardStyles
