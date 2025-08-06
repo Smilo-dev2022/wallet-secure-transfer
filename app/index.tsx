@@ -30,6 +30,11 @@ export default function Index() {
           <Text style={styles.buttonText}>Go to Dashboard</Text>
         </Link>
       </Pressable>
+      <Pressable style={styles.button}>
+        <Link href={"/About"} style={styles.link}>
+          <Text style={styles.buttonText}>Go to About</Text>
+        </Link>
+      </Pressable>
     </View>
   );
 }
