@@ -1,6 +1,7 @@
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import Header from "./components/Header";
 import aboutStyles from "./styles/aboutStyles";
+import { Link } from "expo-router";
 
 export default function About() {
 
@@ -28,12 +29,12 @@ export default function About() {
       </ScrollView>
 
       <View style={aboutStyles.buttonContainer}>
-        <TouchableOpacity style={aboutStyles.loginButton}>
-          <Text style={aboutStyles.loginText}>Login</Text>
+        <TouchableOpacity style={aboutStyles.loginButton} activeOpacity={0.5}>
+          <Link href={"/Login"} style={aboutStyles.loginText}>Login</Link>
         </TouchableOpacity>
 
-        <TouchableOpacity style={aboutStyles.signupButton}>
-          <Text style={aboutStyles.signupText}>Sign Up</Text>
+        <TouchableOpacity style={aboutStyles.signupButton} activeOpacity={0.5}>
+          <Link href={"/Signup"} style={aboutStyles.signupText}>Sign Up</Link>
         </TouchableOpacity>
       </View>
     </View>
