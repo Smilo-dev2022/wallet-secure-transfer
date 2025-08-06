@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TextInput, Button } from "react-native";
-import { signupStyles } from "../styles/signupStyles";
+import signupStyles from "../styles/signupStyles";
 
 import { Link } from "expo-router";
 

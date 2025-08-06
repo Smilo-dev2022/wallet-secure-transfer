@@ -2,7 +2,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text, View, ScrollView } from "react-native";
-import { dashBoardStyles } from "../styles/dashboardStyles";
+import dashBoardStyles from "../styles/dashboardStyles";
 
 export default function Dashboard() {
   return (

@@ -6,7 +6,7 @@ import {
   Button,
 } from "react-native";
 import { Link } from "expo-router";
-import { loginStyles } from "../styles/loginStyles";
+import loginStyles  from "../styles/loginStyles";
 
 export default function Login() {
   return (
