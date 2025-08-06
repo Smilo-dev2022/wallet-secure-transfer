@@ -4,7 +4,7 @@
     "slug": "wallet-secure-transfer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/wallet_855279.png",
     "scheme": "walletsecuretransfer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

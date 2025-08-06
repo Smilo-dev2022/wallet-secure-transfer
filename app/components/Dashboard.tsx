@@ -6,9 +6,9 @@ import { dashBoardStyles } from "../styles/dashboardStyles";
 
 export default function Dashboard() {
   return (
-    <View style={{flex: 1, backgroundColor: '#37539fff'}}>
+    <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
       <View style={dashBoardStyles.header}></View>
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
       >
@@ -39,7 +39,9 @@ export default function Dashboard() {
 
           <View style={dashBoardStyles.transactionList}>
             <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>Sent to John - R50.00</Text>
+              <Text style={dashBoardStyles.transactionText}>
+                Sent to John - R50.00
+              </Text>
               <Text style={dashBoardStyles.transactionDate}>2025-08-01</Text>
             </View>
             <View style={dashBoardStyles.transactionItem}>
@@ -55,31 +57,38 @@ export default function Dashboard() {
               <Text style={dashBoardStyles.transactionDate}>2025-08-02</Text>
             </View>
             <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>Top-up - R300.00</Text>
+              <Text style={dashBoardStyles.transactionText}>
+                Top-up - R300.00
+              </Text>
               <Text style={dashBoardStyles.transactionDate}>2025-07-30</Text>
             </View>
             <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>Sent to Mum - R150.00</Text>
+              <Text style={dashBoardStyles.transactionText}>
+                Sent to Mum - R150.00
+              </Text>
               <Text style={dashBoardStyles.transactionDate}>2025-08-04</Text>
             </View>
           </View>
 
-          <View style={dashBoardStyles.actionsContainer}>
-            <View style={dashBoardStyles.actionItem}>
-              <AntDesign name="arrowright" size={28} color="orange" />
-              <Text style={dashBoardStyles.actionText}>Send</Text>
-            </View>
-
-            <View style={dashBoardStyles.actionItem}>
-              <AntDesign name="qrcode" size={28} color="orange" />
-              <Text style={dashBoardStyles.actionText}>QR Code</Text>
-            </View>
+          <View style={dashBoardStyles.titleContainer}>
+            <Text style={dashBoardStyles.titles}>Bills</Text>
           </View>
         </View>
       </ScrollView>
       <View style={dashBoardStyles.footer}>
-        <View>
-          <Feather name="settings" size={40} color="orange" />
+        <View style={dashBoardStyles.actionItem}>
+          <Feather name="settings" size={24} color="orange" />
+          <Text style={dashBoardStyles.footerText}>Settings</Text>
+        </View>
+
+        <View style={dashBoardStyles.actionItem}>
+          <AntDesign name="qrcode" size={24} color="orange" />
+          <Text style={dashBoardStyles.footerText}>QR Code</Text>
+        </View>
+
+        <View style={dashBoardStyles.actionItem}>
+          <AntDesign name="arrowright" size={24} color="orange" />
+          <Text style={dashBoardStyles.footerText}>Send</Text>
         </View>
       </View>
     </View>

@@ -142,15 +142,23 @@ export const dashBoardStyles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1,
   },
-  footer: {
-    height: 50,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
+footer: {
+  height: 60,
+  backgroundColor: "white",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "space-evenly",
+  paddingHorizontal: 20,
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  zIndex: 1,
+  padding: 6
+},
+    footerText: {
+    fontSize: 12,
+    marginTop: 5,
+    color: "black",
   },
 });
