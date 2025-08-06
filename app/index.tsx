@@ -22,12 +22,9 @@ export default function Index() {
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
       }}
     >
-      <View>
         { session && session.user && <Dashboard /> }
-      </View>
     </View>
   );
 }
