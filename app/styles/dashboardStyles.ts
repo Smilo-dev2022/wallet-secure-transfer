@@ -60,10 +60,6 @@ const dashBoardStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  actionItem: {
-    alignItems: "center",
-  },
-
   actionText: {
     fontSize: 14,
     marginTop: 5,
