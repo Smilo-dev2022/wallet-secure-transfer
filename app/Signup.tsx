@@ -49,7 +49,7 @@ export default function Signup() {
           <Button title="Sign Up" color="#FFD400" onPress={() => {}} />
         </View>
         <View style={signupStyles.centeredContainer}>
-          <Link href="/components/Login" style={signupStyles.loginLink}>
+          <Link href="/Login" style={signupStyles.loginLink}>
             <Text style={signupStyles.loginLinkText}>
               Already have an account?{" "}
               <Text style={signupStyles.loginBold}>Login</Text>

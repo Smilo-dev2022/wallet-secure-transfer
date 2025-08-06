@@ -16,17 +16,17 @@ export default function Index() {
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"./Login"} style={styles.link}>
+        <Link href={"/Login"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Login</Text>
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"./Signup"} style={styles.link}>
+        <Link href={"/Signup"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Signup</Text>
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"./Dashboard"} style={styles.link}>
+        <Link href={"/Dashboard"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Dashboard</Text>
         </Link>
       </Pressable>

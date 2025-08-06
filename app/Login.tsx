@@ -31,7 +31,7 @@ export default function Login() {
         </View>
 
         <View style={loginStyles.centeredContainer}>
-          <Link href="/components/Signup" style={loginStyles.loginLink}>
+          <Link href="/Signup" style={loginStyles.loginLink}>
             <Text style={loginStyles.loginLinkText}>
               Don&apos;t have an account?{" "}
               <Text style={loginStyles.loginBold}>Login</Text>

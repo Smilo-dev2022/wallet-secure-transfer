@@ -5,17 +5,17 @@ import { View, Text, StyleSheet } from "react-native";
 const Footer = () => {
   return (
     <View style={footerStyles.footer}>
-      <View>
+      <View style={footerStyles.iconContainer}>
         <Feather name="settings" size={24} color="orange" />
         <Text style={footerStyles.footerText}>Settings</Text>
       </View>
 
-      <View>
+      <View style={footerStyles.iconContainer}>
         <AntDesign name="qrcode" size={24} color="orange" />
         <Text style={footerStyles.footerText}>QR Code</Text>
       </View>
 
-      <View>
+      <View style={footerStyles.iconContainer}>
         <AntDesign name="arrowright" size={24} color="orange" />
         <Text style={footerStyles.footerText}>Send</Text>
       </View>
@@ -41,8 +41,13 @@ const footerStyles = StyleSheet.create({
     padding: 6,
   },
   footerText: {
-    fontSize: 12,
+    fontSize: 10,
     marginTop: 5,
     color: "black",
+  },
+  iconContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
   },
 });
