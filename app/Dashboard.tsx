@@ -1,8 +1,8 @@
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { ScrollView, Text, View } from "react-native";
 import dashBoardStyles from "./styles/dashboardStyles";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import UserProfile from "./components/UserProfile";
 
 export default function Dashboard() {
   return (
@@ -12,17 +12,8 @@ export default function Dashboard() {
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
       >
+        <UserProfile />
         <View style={dashBoardStyles.container}>
-          <View></View>
-          <View style={dashBoardStyles.profilePicture}>
-            <MaterialCommunityIcons
-              name="face-man-profile"
-              size={48}
-              color="black"
-            />
-          </View>
-
-          <Text style={dashBoardStyles.username}>Garvin Chimone</Text>
 
           <View style={dashBoardStyles.titleContainer}>
             <Text style={dashBoardStyles.titles}>Wallet</Text>

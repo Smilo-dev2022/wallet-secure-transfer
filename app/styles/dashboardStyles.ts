@@ -5,29 +5,10 @@ const dashBoardStyles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "#1E3A8A",
     backgroundColor: "#37539fff",
-    paddingTop: 60,
+    paddingTop: 40,
     alignItems: "center",
     justifyContent: "flex-start",
     marginBottom: 50
-  },
-
-  profilePicture: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: "#F9FAFB",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "#F97316",
-    marginBottom: 20,
-  },
-
-  username: {
-    fontSize: 28,
-    fontWeight: "600",
-    color: "white",
-    marginBottom: 30,
   },
 
   balanceCard: {
