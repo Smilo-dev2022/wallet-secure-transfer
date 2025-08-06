@@ -7,7 +7,7 @@ export default function RootLayout() {
       {/* <Stack initialRouteName="components/Dashboard"> */}
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="components/SplashPage" options={{ headerShown: false }} />
+        <Stack.Screen name="/SplashPage" options={{ headerShown: false }} />
         <Stack.Screen name="components/Login" options={{ headerShown: false }} />
         <Stack.Screen name="components/Signup" options={{ headerShown: false }} />
         <Stack.Screen name="components/Dashboard" options={{ headerShown: false }} />

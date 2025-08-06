@@ -1,12 +1,12 @@
+import { Link } from "expo-router";
 import React from "react";
 import {
-  View,
+  Button,
   Text,
   TextInput,
-  Button,
+  View,
 } from "react-native";
-import { Link } from "expo-router";
-import loginStyles  from "../styles/loginStyles";
+import loginStyles from "./styles/loginStyles";
 
 export default function Login() {
   return (

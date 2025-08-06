@@ -11,22 +11,22 @@ export default function Index() {
       }}
     >
       <Pressable style={styles.button}>
-        <Link href={"/components/SplashPage"} style={styles.link}>
+        <Link href={"./SplashPage"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Splash</Text>
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"/components/Login"} style={styles.link}>
+        <Link href={"./Login"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Login</Text>
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"/components/Signup"} style={styles.link}>
+        <Link href={"./Signup"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Signup</Text>
         </Link>
       </Pressable>
       <Pressable style={styles.button}>
-        <Link href={"/components/Dashboard"} style={styles.link}>
+        <Link href={"./Dashboard"} style={styles.link}>
           <Text style={styles.buttonText}>Go to Dashboard</Text>
         </Link>
       </Pressable>

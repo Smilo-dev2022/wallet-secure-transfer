@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import splashStyles from '../styles/splashStyles';
+import splashStyles from './styles/splashStyles';
 
 export default function SplashPage() {
   return (
