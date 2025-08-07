@@ -1,14 +1,17 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { View, Text, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 
 const Footer = () => {
   return (
     <View style={footerStyles.footer}>
-      <View style={footerStyles.iconContainer}>
-        <Feather name="settings" size={24} color="orange" />
-        <Text style={footerStyles.footerText}>Settings</Text>
-      </View>
+      <Link href={"/pages/Settings"}>
+        <View style={footerStyles.iconContainer}>
+          <Feather name="settings" size={24} color="orange" />
+          <Text style={footerStyles.footerText}>Settings</Text>
+        </View>
+      </Link>
 
       <View style={footerStyles.iconContainer}>
         <AntDesign name="qrcode" size={24} color="orange" />
