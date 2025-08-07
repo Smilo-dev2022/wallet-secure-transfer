@@ -4,7 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <Stack initialRouteName="About">
+      <Stack initialRouteName="pages/About">
       {/* <Stack> */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="pages/SplashPage" options={{ headerShown: false }} />

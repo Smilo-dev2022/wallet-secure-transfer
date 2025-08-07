@@ -13,7 +13,7 @@ export default function About() {
 
         <View style={aboutStyles.card}>
           <Image
-            source={require("../assets/images/screenpay.jpg")}
+            source={require("../../assets/images/screenpay.jpg")}
             style={aboutStyles.image}
           />
           <Text style={aboutStyles.cardText}>Keep track of your bills easily</Text>
@@ -21,7 +21,7 @@ export default function About() {
 
         <View style={aboutStyles.card}>
           <Image
-            source={require("../assets/images/transfer.jpg")}
+            source={require("../../assets/images/transfer.jpg")}
             style={aboutStyles.image}
           />
           <Text style={aboutStyles.cardText}>Send money to friends & family</Text>
