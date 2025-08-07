@@ -8,7 +8,7 @@ export default function SplashPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace('/Dashboard')
+      router.replace('/pages/Dashboard')
     }, 2000)
 
     return () => clearTimeout(timer)
