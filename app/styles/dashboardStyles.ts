@@ -5,29 +5,11 @@ const dashBoardStyles = StyleSheet.create({
     flex: 1,
     // backgroundColor: "#1E3A8A",
     backgroundColor: "#37539fff",
-    paddingTop: 60,
+    paddingTop: 40,
     alignItems: "center",
     justifyContent: "flex-start",
-    marginBottom: 50
-  },
-
-  profilePicture: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: "#F9FAFB",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "#F97316",
-    marginBottom: 20,
-  },
-
-  username: {
-    fontSize: 28,
-    fontWeight: "600",
-    color: "white",
-    marginBottom: 30,
+    marginBottom: 50,
+    width: '100%',
   },
 
   balanceCard: {
@@ -58,10 +40,6 @@ const dashBoardStyles = StyleSheet.create({
     flexDirection: "row",
     width: "60%",
     justifyContent: "space-between",
-  },
-
-  actionItem: {
-    alignItems: "center",
   },
 
   actionText: {
@@ -142,25 +120,25 @@ const dashBoardStyles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1,
   },
-footer: {
-  height: 60,
-  backgroundColor: "white",
-  flexDirection: "row",
-  alignItems: "center",
-  justifyContent: "space-evenly",
-  paddingHorizontal: 20,
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-  zIndex: 1,
-  padding: 6
-},
-    footerText: {
+  footer: {
+    height: 60,
+    backgroundColor: "white",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    paddingHorizontal: 20,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    padding: 6,
+  },
+  footerText: {
     fontSize: 12,
     marginTop: 5,
     color: "black",
   },
 });
 
-export default dashBoardStyles
+export default dashBoardStyles;

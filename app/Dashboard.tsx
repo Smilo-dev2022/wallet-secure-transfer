@@ -1,28 +1,19 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Text, View, ScrollView } from "react-native";
-import dashBoardStyles from "../styles/dashboardStyles";
+import { ScrollView, Text, View } from "react-native";
+import dashBoardStyles from "./styles/dashboardStyles";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import UserProfile from "./components/UserProfile";
 
 export default function Dashboard() {
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
-      <View style={dashBoardStyles.header}></View>
+      <Header />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
       >
+        <UserProfile />
         <View style={dashBoardStyles.container}>
-          <View></View>
-          <View style={dashBoardStyles.profilePicture}>
-            <MaterialCommunityIcons
-              name="face-man-profile"
-              size={48}
-              color="black"
-            />
-          </View>
-
-          <Text style={dashBoardStyles.username}>Garvin Chimone</Text>
 
           <View style={dashBoardStyles.titleContainer}>
             <Text style={dashBoardStyles.titles}>Wallet</Text>
@@ -75,22 +66,7 @@ export default function Dashboard() {
           </View>
         </View>
       </ScrollView>
-      <View style={dashBoardStyles.footer}>
-        <View style={dashBoardStyles.actionItem}>
-          <Feather name="settings" size={24} color="orange" />
-          <Text style={dashBoardStyles.footerText}>Settings</Text>
-        </View>
-
-        <View style={dashBoardStyles.actionItem}>
-          <AntDesign name="qrcode" size={24} color="orange" />
-          <Text style={dashBoardStyles.footerText}>QR Code</Text>
-        </View>
-
-        <View style={dashBoardStyles.actionItem}>
-          <AntDesign name="arrowright" size={24} color="orange" />
-          <Text style={dashBoardStyles.footerText}>Send</Text>
-        </View>
-      </View>
+      <Footer />
     </View>
   );
 }
