@@ -1,26 +1,46 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
-import supabase  from './lib/supabase'
+import supabase from "./lib/supabase";
 import signupStyles from "./styles/signupStyles";
 
 import { Link } from "expo-router";
 
 export default function Signup() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
+  // const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
 
-  async function signUpWithEmail() {
-    setLoading(true)
-    const { data: {session}, error } = await supabase.auth.signUp({
-      email: email,
-      password: password
-    })
+  // async function signUpWithEmail() {
+  //   setLoading(true);
+  //   const {
+  //     data: { session },
+  //     error,
+  //   } = await supabase.auth.signUp({
+  //     email: email,
+  //     password: password,
+  //   });
 
-    if(error) Alert.alert(error.message)
-    if(!session) Alert.alert('please check your email for verification')
-    setLoading(false)
+  //   if (error) Alert.alert(error.message);
+  //   if (!session) Alert.alert("please check your email for verification");
+  //   setLoading(false);
+  // }
+
+  async function signUpWithPhone() {
+    setLoading(true);
+
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      phone: phone,
+      password: password,
+    });
+
+    if (error) Alert.alert(error.message);
+    if (!session) Alert.alert("check sms message for verification");
+    setLoading(false);
   }
 
   return (
@@ -35,13 +55,22 @@ export default function Signup() {
           onChangeText={(text) => setName(text)}
         />
 
-        <Text style={signupStyles.label}>Email</Text>
+        {/* <Text style={signupStyles.label}>Email</Text>
         <TextInput
           placeholder="Enter your email"
           placeholderTextColor="#999"
           style={signupStyles.input}
           value={email}
           onChangeText={(text) => setEmail(text)}
+        /> */}
+
+        <Text style={signupStyles.label}>Phone Number</Text>
+        <TextInput
+          placeholder="Enter your number"
+          placeholderTextColor="#999"
+          style={signupStyles.input}
+          value={phone}
+          onChangeText={(text) => setPhone(text)}
         />
 
         <Text style={signupStyles.label}>Password</Text>
@@ -55,7 +84,12 @@ export default function Signup() {
         />
 
         <View style={signupStyles.buttonContainer}>
-          <Button title="Sign Up" color="#F97316" onPress={() => signUpWithEmail()} disabled={loading}/>
+          <Button
+            title="Sign Up"
+            color="#F97316"
+            onPress={() => signUpWithPhone()}
+            disabled={loading}
+          />
         </View>
         <View style={signupStyles.centeredContainer}>
           <Link href="/Login" style={signupStyles.loginLink}>
