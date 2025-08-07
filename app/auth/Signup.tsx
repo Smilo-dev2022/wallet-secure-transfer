@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
-import supabase from "./lib/supabase";
-import signupStyles from "./styles/signupStyles";
+import supabase from "../lib/supabase";
+import signupStyles from "../styles/signupStyles";
 
 import { Link } from "expo-router";
 
@@ -92,7 +92,7 @@ export default function Signup() {
           />
         </View>
         <View style={signupStyles.centeredContainer}>
-          <Link href="/Login" style={signupStyles.loginLink}>
+          <Link href="/auth/Signup" style={signupStyles.loginLink}>
             <Text style={signupStyles.loginLinkText}>
               Already have an account?{" "}
               <Text style={signupStyles.loginBold}>Login</Text>

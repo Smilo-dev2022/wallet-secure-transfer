@@ -1,8 +1,8 @@
-import { View } from "react-native";
-import { useState, useEffect } from "react";
-import supabase from "./lib/supabase";
 import { Session } from "@supabase/supabase-js";
-import Dashboard from "./Dashboard";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
+import supabase from "./lib/supabase";
+import Dashboard from "./pages/Dashboard";
 
 export default function Index() {
   const [session, setSession] = useState<Session | null>(null)

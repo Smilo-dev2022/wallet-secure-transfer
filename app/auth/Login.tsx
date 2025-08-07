@@ -2,8 +2,8 @@
 import { Link, useRouter  } from "expo-router";
 import React, { useState } from "react";
 import { Button, Text, TextInput, View, Alert } from "react-native";
-import loginStyles from "./styles/loginStyles";
-import supabase from "./lib/supabase";
+import loginStyles from "../styles/loginStyles";
+import supabase from "../lib/supabase";
 
 export default function Login() {
   const router = useRouter();
@@ -58,7 +58,7 @@ export default function Login() {
         </View>
 
         <View style={loginStyles.centeredContainer}>
-          <Link href="/Signup" style={loginStyles.loginLink}>
+          <Link href="/auth/Signup" style={loginStyles.loginLink}>
             <Text style={loginStyles.loginLinkText}>
               Don&apos;t have ann account?{" "}
               <Text style={[loginStyles.loginBold, { color: "#0082ff" }]}>

@@ -7,11 +7,11 @@ export default function RootLayout() {
       <Stack initialRouteName="About">
       {/* <Stack> */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="SplashPage" options={{ headerShown: false }} />
-        <Stack.Screen name="Login" options={{ headerShown: false }} />
-        <Stack.Screen name="Signup" options={{ headerShown: false }} />
-        <Stack.Screen name="Dashboard" options={{ headerShown: false }} />
-        <Stack.Screen name="About" options={{ headerShown: false }} />
+        <Stack.Screen name="pages/SplashPage" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/Login" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/Signup" options={{ headerShown: false }} />
+        <Stack.Screen name="pages/Dashboard" options={{ headerShown: false }} />
+        <Stack.Screen name="pages/About" options={{ headerShown: false }} />
       </Stack>
     </SafeAreaProvider>
   );
