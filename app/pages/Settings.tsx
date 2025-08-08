@@ -1,5 +1,4 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
-import Header from "../components/Header";
 import { Link } from "expo-router";
 import settingsArr from "../data/settings";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,7 +32,6 @@ const renderItem = ({ item }: { item: SettingItem }) => {
 export default function Settings() {
   return (
     <View style={settingStyles.container}>
-      <Header />
       <FlatList
         data={settingsArr as unknown as SettingItem[]}
         renderItem={renderItem}
