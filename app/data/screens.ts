@@ -1,86 +1,90 @@
 const screens = [
-  { 
-    name: "index", 
-    options: { 
+  {
+    name: "index",
+    options: {
       headerShown: false,
-      headerTintColor: '#fff', 
+      headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-      headerTitle: "Index"
-    }, 
-    title: "index" 
-  },
-  { 
-    name: "pages/SplashPage", 
-    options: { 
-      headerShown: false,
-      headerTintColor: '#fff', 
-      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
-      headerBackVisible: false,
-      zIndex: 5,
-      headerTitle: ''
+      headerTitle: "Index",
     },
-    title: "SplashPage" 
   },
-  { 
-    name: "auth/Login", 
-    options: { 
+  {
+    name: "pages/SplashPage",
+    options: {
       headerShown: false,
-      headerTintColor: '#fff', 
+      headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-      headerTitle: ''
-    }, 
-    title: "Login" 
+      headerTitle: "",
+    },
   },
-  { 
-    name: "auth/Signup", 
-    options: { 
+  {
+    name: "auth/Login",
+    options: {
       headerShown: false,
-      headerTintColor: '#fff', 
+      headerTintColor: "#fff",
+      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
+      headerBackVisible: false,
+      zIndex: 5,
+      headerTitle: "",
+    },
+  },
+  {
+    name: "auth/Signup",
+    options: {
+      headerShown: false,
+      headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackvisible: false,
       zIndex: 5,
-      headerTitle: ''
-    }, 
-    title: "Signup" 
+      headerTitle: "",
+    },
   },
-  { 
-    name: "pages/Dashboard", 
-    options: { 
+  {
+    name: "pages/Dashboard",
+    options: {
       headerShown: true,
-      headerTintColor: '#fff', 
+      headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-      headerTitle: ''
-    }, 
-    title: "Dashboard" 
+      headerTitle: "",
+    },
   },
-  { 
-    name: "pages/About", 
-    options: { 
+  {
+    name: "pages/About",
+    options: {
       headerShown: true,
-      headerTintColor: '#fff', 
-      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
-      headerBackVisible: false,
-      zIndex: 5
-    }, 
-    title: "About" 
-  },
-  { 
-    name: "pages/Settings", 
-    options: { 
-      headerShown: true,
-      headerTintColor: '#fff', 
+      headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-      headerTitle: 'Settings'
-    }, 
-    title: "Settings" 
+    },
+  },
+  {
+    name: "pages/Settings",
+    options: {
+      headerShown: true,
+      headerTintColor: "#fff",
+      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
+      headerBackVisible: false,
+      zIndex: 5,
+      headerTitle: "Settings",
+    },
+  },
+  {
+    name: "pages/AccountSettings",
+    options: {
+      headerShown: true,
+      headerTintColor: "#fff",
+      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
+      headerBackVisible: false,
+      zIndex: 5,
+      headerTitle: "Account Settings",
+    },
   },
 ];
 

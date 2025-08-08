@@ -5,17 +5,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
 
 type IconName = ComponentProps<typeof Ionicons>["name"];
+type AppRoute = React.ComponentProps<typeof Link>["href"];
 
 type SettingItem = {
   id: number;
   title: string;
   description: string;
   icon: IconName;
+  goTo: AppRoute;
 };
 
 const renderItem = ({ item }: { item: SettingItem }) => {
   return (
-    <Link href={"/"} asChild>
+    <Link href={item.goTo} asChild>
       <TouchableOpacity style={settingStyles.itemContainer}>
         <View style={settingStyles.iconContainer}>
           <Ionicons name={item.icon} size={24} color="#1E3A8A" />
