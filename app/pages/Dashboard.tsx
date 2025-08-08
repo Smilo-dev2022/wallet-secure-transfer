@@ -1,13 +1,11 @@
 import { ScrollView, Text, View } from "react-native";
-import dashBoardStyles from "./styles/dashboardStyles";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import UserProfile from "./components/UserProfile";
+import Footer from "../components/Footer";
+import UserProfile from "../components/UserProfile";
+import dashBoardStyles from "../styles/dashboardStyles";
 
 export default function Dashboard() {
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
-      <Header />
       <ScrollView
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}

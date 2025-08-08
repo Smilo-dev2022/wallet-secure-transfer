@@ -1,16 +1,12 @@
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { StyleSheet, View, Text } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const UserProfile = () => {
   return (
     <View style={profileStyles.profileContainer}>
       <View></View>
       <View style={profileStyles.profilePicture}>
-        <MaterialCommunityIcons
-          name="face-man-profile"
-          size={48}
-          color="black"
-        />
+        <Ionicons name="person-circle-outline" size={50} color="black" />
       </View>
       <Text style={profileStyles.username}>Garvin Chimone</Text>
     </View>
@@ -38,7 +34,7 @@ const profileStyles = StyleSheet.create({
   profileContainer: {
     flex: 1,
     alignItems: "center",
-    marginTop: 50
+    marginTop: 50,
   },
 });
 
