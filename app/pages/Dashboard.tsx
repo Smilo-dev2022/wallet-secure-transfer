@@ -1,67 +1,46 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import Footer from "../components/Footer";
 import UserProfile from "../components/UserProfile";
 import dashBoardStyles from "../styles/dashboardStyles";
+import { Ionicons } from "@expo/vector-icons";
+import { ComponentProps } from "react";
+
+type IconName = ComponentProps<typeof Ionicons>["name"]
+type DashboardCards = {
+  title: string;
+  icon: IconName
+}
 
 export default function Dashboard() {
+  const menuItems: DashboardCards[] = [
+    { title: "Wallet", icon: "wallet-outline" },
+    { title: "Transactions", icon: "swap-horizontal-outline" },
+    { title: "Bills", icon: "receipt-outline" },
+    { title: "QR Code", icon: "qr-code-outline" },
+    { title: "Support", icon: "help-circle-outline" },
+    { title: "Verification", icon: "shield-checkmark-outline" },
+    { title: "Notifications", icon: "notifications-outline" },
+  ];
+
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
       <ScrollView
-        contentContainerStyle={{ paddingBottom: 50 }}
+        contentContainerStyle={{ paddingBottom: 20, alignItems: "center" }}
         showsVerticalScrollIndicator={false}
       >
         <UserProfile />
-        <View style={dashBoardStyles.container}>
 
-          <View style={dashBoardStyles.titleContainer}>
-            <Text style={dashBoardStyles.titles}>Wallet</Text>
-          </View>
-
-          <View style={dashBoardStyles.balanceCard}>
-            <Text style={dashBoardStyles.balance}>R 200.00</Text>
-          </View>
-
-          <View style={dashBoardStyles.titleContainer}>
-            <Text style={dashBoardStyles.titles}>Transaction History</Text>
-            <Text style={dashBoardStyles.subTitle}>Last 30 days</Text>
-          </View>
-
-          <View style={dashBoardStyles.transactionList}>
-            <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>
-                Sent to John - R50.00
-              </Text>
-              <Text style={dashBoardStyles.transactionDate}>2025-08-01</Text>
-            </View>
-            <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>
-                Received from Lisa - R100.00
-              </Text>
-              <Text style={dashBoardStyles.transactionDate}>2025-08-03</Text>
-            </View>
-            <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>
-                Paid Electricity - R250.00
-              </Text>
-              <Text style={dashBoardStyles.transactionDate}>2025-08-02</Text>
-            </View>
-            <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>
-                Top-up - R300.00
-              </Text>
-              <Text style={dashBoardStyles.transactionDate}>2025-07-30</Text>
-            </View>
-            <View style={dashBoardStyles.transactionItem}>
-              <Text style={dashBoardStyles.transactionText}>
-                Sent to Mum - R150.00
-              </Text>
-              <Text style={dashBoardStyles.transactionDate}>2025-08-04</Text>
-            </View>
-          </View>
-
-          <View style={dashBoardStyles.titleContainer}>
-            <Text style={dashBoardStyles.titles}>Bills</Text>
-          </View>
+        <View style={dashBoardStyles.gridContainer}>
+          {menuItems.map((item: DashboardCards, index) => (
+            <TouchableOpacity
+              key={index}
+              style={dashBoardStyles.cardButton}
+              activeOpacity={0.8}
+            >
+              <Ionicons name={item.icon} size={36} color="#F97316" />
+              <Text style={dashBoardStyles.cardTitle}>{item.title}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
       <Footer />

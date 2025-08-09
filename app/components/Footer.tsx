@@ -1,4 +1,5 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Feather from "@expo/vector-icons/Feather";
 import { View, Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
@@ -21,6 +22,11 @@ const Footer = () => {
       <View style={footerStyles.iconContainer}>
         <AntDesign name="arrowright" size={24} color="orange" />
         <Text style={footerStyles.footerText}>Send</Text>
+      </View>
+
+      <View style={footerStyles.iconContainer}>
+        <MaterialIcons name="logout" size={24} color="orange" />
+        <Text style={footerStyles.footerText}>Logout</Text>
       </View>
     </View>
   );
