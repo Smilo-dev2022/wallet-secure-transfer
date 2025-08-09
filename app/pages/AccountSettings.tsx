@@ -85,15 +85,43 @@ export default function AccountSettings() {
     Alert.alert("Logout", "This will log you out (stub).");
   };
 
+  const openCamera = async () => {
+    try {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Permissions required",
+          "Permission to access camera is required to take a photo"
+        );
+        return;
+      }
+
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ["images"],
+        cameraType: ImagePicker.CameraType.front,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.7,
+      });
+
+      if (!result.canceled) {
+        const uri = result.assets?.[0]?.uri ?? (result as any).uri;
+        if (uri) setImageUri(uri);
+      }
+    } catch (error) {
+      console.error("Camera error", error)
+    }
+  };
+
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? "padding" : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={accountSettingsStyles.container}
     >
       <View style={accountSettingsStyles.content}>
-        <ScrollView 
-         contentContainerStyle={accountSettingsStyles.scrollContent }
-         showsVerticalScrollIndicator={false}
+        <ScrollView
+          contentContainerStyle={accountSettingsStyles.scrollContent}
+          showsVerticalScrollIndicator={false}
         >
           <View style={accountSettingsStyles.profileContainer}>
             <Image
@@ -105,7 +133,7 @@ export default function AccountSettings() {
                 name="camera"
                 size={18}
                 color={"white"}
-                onPress={pickImage}
+                onPress={openCamera}
               />
             </TouchableOpacity>
           </View>
