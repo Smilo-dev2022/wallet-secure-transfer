@@ -1,24 +1,38 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 import { View, Text, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 
 const Footer = () => {
   return (
     <View style={footerStyles.footer}>
-      <View style={footerStyles.iconContainer}>
-        <Feather name="settings" size={24} color="orange" />
-        <Text style={footerStyles.footerText}>Settings</Text>
-      </View>
+      <Link href={"/pages/Dashboard"}>
+        <View style={footerStyles.iconContainer}>
+          <Feather name="home" size={24} color="orange" />
+          <Text style={footerStyles.footerText}>Home</Text>
+        </View>
+      </Link>
 
-      <View style={footerStyles.iconContainer}>
-        <AntDesign name="qrcode" size={24} color="orange" />
-        <Text style={footerStyles.footerText}>QR Code</Text>
-      </View>
+      <Link href={"/pages/Wallet"}>
+        <View style={footerStyles.iconContainer}>
+          <AntDesign name="wallet" size={24} color="orange" />
+          <Text style={footerStyles.footerText}>Wallet</Text>
+        </View>
+      </Link>
 
-      <View style={footerStyles.iconContainer}>
-        <AntDesign name="arrowright" size={24} color="orange" />
-        <Text style={footerStyles.footerText}>Send</Text>
-      </View>
+      <Link href={"/pages/SendMoney"}>
+        <View style={footerStyles.iconContainer}>
+          <AntDesign name="arrowright" size={24} color="orange" />
+          <Text style={footerStyles.footerText}>Send</Text>
+        </View>
+      </Link>
+
+      <Link href={"/pages/Settings"}>
+        <View style={footerStyles.iconContainer}>
+          <Feather name="settings" size={24} color="orange" />
+          <Text style={footerStyles.footerText}>Settings</Text>
+        </View>
+      </Link>
     </View>
   );
 };
