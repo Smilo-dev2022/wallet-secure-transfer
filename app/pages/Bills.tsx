@@ -1,7 +1,14 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { ComponentProps } from "react";
+import Footer from "../components/Footer";
 
 // type AppRoute = React.ComponentProps<typeof Link>["href"];
 type IconName = ComponentProps<typeof Ionicons>["name"];
@@ -9,10 +16,10 @@ type BillItems = {
   id: number;
   icon: IconName;
   name: string;
-}
+};
 
 export default function Bills() {
-  const billsCategories:  BillItems[] = [
+  const billsCategories: BillItems[] = [
     { id: 1, name: "Electricity", icon: "flash-outline" },
     { id: 2, name: "Water", icon: "water-outline" },
     { id: 3, name: "Airtime", icon: "call-outline" },
@@ -22,23 +29,22 @@ export default function Bills() {
   ];
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <Text style={styles.title}>Pay Your Bills</Text>
-      <View style={styles.grid}>
-        {billsCategories.map((bill) => (
-          <Link
-            key={bill.id}
-            href={'/'}
-            asChild
-          >
-            <TouchableOpacity style={styles.card}>
-              <Ionicons name={bill.icon} size={32} color="#F97316" />
-              <Text style={styles.cardText}>{bill.name}</Text>
-            </TouchableOpacity>
-          </Link>
-        ))}
-      </View>
-    </ScrollView>
+    <View style={{flex: 1}}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>Pay Your Bills</Text>
+        <View style={styles.grid}>
+          {billsCategories.map((bill) => (
+            <Link key={bill.id} href={"/"} asChild>
+              <TouchableOpacity style={styles.card}>
+                <Ionicons name={bill.icon} size={32} color="#F97316" />
+                <Text style={styles.cardText}>{bill.name}</Text>
+              </TouchableOpacity>
+            </Link>
+          ))}
+        </View>
+      </ScrollView>
+      <Footer />
+    </View>
   );
 }
 

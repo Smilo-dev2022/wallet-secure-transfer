@@ -38,6 +38,8 @@ const walletStyles = StyleSheet.create({
     shadowRadius: 16,
     elevation: 6,
     alignItems: "center",
+    width: 330,
+    maxWidth: 330
   },
   walletLabel: {
     color: "#6B7280",
@@ -92,6 +94,13 @@ const walletStyles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 18,
   },
+  scrollContainer: {
+  flex: 1,
+  backgroundColor: "#37539fff",
+  paddingHorizontal: 20,
+  paddingTop: 50,
+},
+
 });
 
 export default walletStyles

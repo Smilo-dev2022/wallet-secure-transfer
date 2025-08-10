@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import accountSettingsStyles from "../styles/accountSettingStyles";
+// import Footer from "../components/Footer";
 
 export default function AccountSettings() {
   const [imageUri, setImageUri] = useState<string>(
@@ -109,114 +110,116 @@ export default function AccountSettings() {
         if (uri) setImageUri(uri);
       }
     } catch (error) {
-      console.error("Camera error", error)
+      console.error("Camera error", error);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={accountSettingsStyles.container}
-    >
-      <View style={accountSettingsStyles.content}>
-        <ScrollView
-          contentContainerStyle={accountSettingsStyles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <View style={accountSettingsStyles.profileContainer}>
-            <Image
-              source={{ uri: imageUri }}
-              style={accountSettingsStyles.profileImage}
-            />
-            <TouchableOpacity style={accountSettingsStyles.editIcon}>
-              <Ionicons
-                name="camera"
-                size={18}
-                color={"white"}
-                onPress={openCamera}
-              />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            style={accountSettingsStyles.uploadButton}
-            onPress={pickImage}
+    <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={accountSettingsStyles.container}
+      >
+        <View style={accountSettingsStyles.content}>
+          <ScrollView
+            contentContainerStyle={accountSettingsStyles.scrollContent}
+            showsVerticalScrollIndicator={false}
           >
-            <Text style={accountSettingsStyles.uploadText}>
-              Upload New Photo
-            </Text>
-          </TouchableOpacity>
+            <View style={accountSettingsStyles.profileContainer}>
+              <Image
+                source={{ uri: imageUri }}
+                style={accountSettingsStyles.profileImage}
+              />
+              <TouchableOpacity style={accountSettingsStyles.editIcon}>
+                <Ionicons
+                  name="camera"
+                  size={18}
+                  color={"white"}
+                  onPress={openCamera}
+                />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={accountSettingsStyles.uploadButton}
+              onPress={pickImage}
+            >
+              <Text style={accountSettingsStyles.uploadText}>
+                Upload New Photo
+              </Text>
+            </TouchableOpacity>
 
-          <View style={[accountSettingsStyles.sectionHeader]}>
-            <Text style={accountSettingsStyles.sectionTitle}>
-              Change Password
-            </Text>
-            <Text style={accountSettingsStyles.sectionNote}>
-              Leave blank if you don&apos;t want to change your password
-            </Text>
-          </View>
+            <View style={[accountSettingsStyles.sectionHeader]}>
+              <Text style={accountSettingsStyles.sectionTitle}>
+                Change Password
+              </Text>
+              <Text style={accountSettingsStyles.sectionNote}>
+                Leave blank if you don&apos;t want to change your password
+              </Text>
+            </View>
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>Current Password</Text>
-            <View style={accountSettingsStyles.passwordRow}>
+            <View style={accountSettingsStyles.inputGroup}>
+              <Text style={accountSettingsStyles.label}>Current Password</Text>
+              <View style={accountSettingsStyles.passwordRow}>
+                <TextInput
+                  value={currentPassword}
+                  onChangeText={setCurrentPassword}
+                  style={[
+                    accountSettingsStyles.input,
+                    accountSettingsStyles.passwordInput,
+                  ]}
+                  placeholder="Current password"
+                  placeholderTextColor="#9CA3AF"
+                  secureTextEntry={!showPasswords}
+                  autoCapitalize="none"
+                />
+              </View>
+            </View>
+
+            <View style={accountSettingsStyles.inputGroup}>
+              <Text style={accountSettingsStyles.label}>New Password</Text>
               <TextInput
-                value={currentPassword}
-                onChangeText={setCurrentPassword}
-                style={[
-                  accountSettingsStyles.input,
-                  accountSettingsStyles.passwordInput,
-                ]}
-                placeholder="Current password"
+                value={newPassword}
+                onChangeText={setNewPassword}
+                style={accountSettingsStyles.input}
+                placeholder="New password"
                 placeholderTextColor="#9CA3AF"
                 secureTextEntry={!showPasswords}
                 autoCapitalize="none"
               />
             </View>
-          </View>
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>New Password</Text>
-            <TextInput
-              value={newPassword}
-              onChangeText={setNewPassword}
-              style={accountSettingsStyles.input}
-              placeholder="New password"
-              placeholderTextColor="#9CA3AF"
-              secureTextEntry={!showPasswords}
-              autoCapitalize="none"
-            />
-          </View>
+            <View style={accountSettingsStyles.inputGroup}>
+              <Text style={accountSettingsStyles.label}>
+                Confirm New Password
+              </Text>
+              <TextInput
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                style={accountSettingsStyles.input}
+                placeholder="Confirm new password"
+                placeholderTextColor="#9CA3AF"
+                secureTextEntry={!showPasswords}
+                autoCapitalize="none"
+              />
+            </View>
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>
-              Confirm New Password
-            </Text>
-            <TextInput
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              style={accountSettingsStyles.input}
-              placeholder="Confirm new password"
-              placeholderTextColor="#9CA3AF"
-              secureTextEntry={!showPasswords}
-              autoCapitalize="none"
-            />
-          </View>
+            <TouchableOpacity
+              style={accountSettingsStyles.saveButton}
+              onPress={onSave}
+            >
+              <Text style={accountSettingsStyles.saveText}>Save Changes</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={accountSettingsStyles.saveButton}
-            onPress={onSave}
-          >
-            <Text style={accountSettingsStyles.saveText}>Save Changes</Text>
-          </TouchableOpacity>
-
-          {/* Logout Button */}
-          <TouchableOpacity
-            style={accountSettingsStyles.logoutButton}
-            onPress={onLogout}
-          >
-            <Text style={accountSettingsStyles.logoutText}>Logout</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
-    </KeyboardAvoidingView>
+            <TouchableOpacity
+              style={accountSettingsStyles.logoutButton}
+              onPress={onLogout}
+            >
+              <Text style={accountSettingsStyles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
+      {/* <Footer /> */}
+    </View>
   );
 }

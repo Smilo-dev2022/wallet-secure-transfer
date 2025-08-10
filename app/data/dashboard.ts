@@ -35,17 +35,7 @@ const dashBoardItems: DashboardCards[] = [
     title: "Verification",
     icon: "shield-checkmark-outline",
     goto: "/" as AppRoute,
-  },
-  {
-    title: "Notifications",
-    icon: "notifications-outline",
-    goto: "/" as AppRoute,
-  },
-    {
-    title: "Settings",
-    icon: "settings-outline",
-    goto: "/pages/Settings" as AppRoute,
-  },
+  }
 ];
 
 export default dashBoardItems;

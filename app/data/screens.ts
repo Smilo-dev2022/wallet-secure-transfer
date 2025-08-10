@@ -61,7 +61,7 @@ const screens = [
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-      headerTitle: "",
+      headerTitle: "Dashboard",
       animation: "slide_from_right",
       animationDuration: 450,
     } as NativeStackNavigationOptions,

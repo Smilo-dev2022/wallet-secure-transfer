@@ -2,7 +2,7 @@ import { Session } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import supabase from "./lib/supabase";
-import Dashboard from "./pages/Dashboard";
+import Wallet from "./pages/Wallet";
 
 export default function Index() {
   const [session, setSession] = useState<Session | null>(null)
@@ -24,7 +24,7 @@ export default function Index() {
         justifyContent: "center",
       }}
     >
-        { session && session.user && <Dashboard /> }
+        { session && session.user && <Wallet /> }
     </View>
   );
 }

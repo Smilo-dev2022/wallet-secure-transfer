@@ -3,6 +3,7 @@ import { Link } from "expo-router";
 import settingsArr from "../data/settings";
 import { Ionicons } from "@expo/vector-icons";
 import { ComponentProps } from "react";
+import Footer from "../components/Footer";
 
 type IconName = ComponentProps<typeof Ionicons>["name"];
 type AppRoute = React.ComponentProps<typeof Link>["href"];
@@ -40,6 +41,7 @@ export default function Settings() {
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={settingStyles.listContent}
       />
+      <Footer />
     </View>
   );
 }
