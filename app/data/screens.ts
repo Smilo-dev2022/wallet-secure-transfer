@@ -1,3 +1,5 @@
+import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
+
 const screens = [
   {
     name: "index",
@@ -8,7 +10,9 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "Index",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "pages/SplashPage",
@@ -19,7 +23,9 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "auth/Login",
@@ -30,7 +36,9 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "auth/Signup",
@@ -38,10 +46,12 @@ const screens = [
       headerShown: false,
       headerTintColor: "#fff",
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
-      headerBackvisible: false,
+      headerBackVisible: false,
       zIndex: 5,
       headerTitle: "",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "pages/Dashboard",
@@ -52,7 +62,9 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "pages/About",
@@ -62,7 +74,10 @@ const screens = [
       headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
       headerBackVisible: false,
       zIndex: 5,
-    },
+      headerTitle: "",
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "pages/Settings",
@@ -73,7 +88,9 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "Settings",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
   {
     name: "pages/AccountSettings",
@@ -84,7 +101,22 @@ const screens = [
       headerBackVisible: false,
       zIndex: 5,
       headerTitle: "Account Settings",
-    },
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
+  },
+  {
+    name: "pages/Wallet",
+    options: {
+      headerShown: true,
+      headerTintColor: "#fff",
+      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
+      headerBackVisible: false,
+      zIndex: 5,
+      headerTitle: "Your Wallet",
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
   },
 ];
 

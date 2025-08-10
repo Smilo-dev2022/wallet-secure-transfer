@@ -56,6 +56,7 @@ const dashBoardStyles = StyleSheet.create({
     color: "#6B7280",
     marginTop: 4,
   },
+  
   gridContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
