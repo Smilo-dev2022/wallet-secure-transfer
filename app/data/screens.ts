@@ -118,6 +118,19 @@ const screens = [
       animationDuration: 450,
     } as NativeStackNavigationOptions,
   },
+  {
+    name: "pages/SendMoney",
+    options: {
+      headerShown: true,
+      headerTintColor: "#fff",
+      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
+      headerBackVisible: false,
+      zIndex: 5,
+      headerTitle: "Send Money",
+      animation: "slide_from_right",
+      animationDuration: 450,
+    } as NativeStackNavigationOptions,
+  },
 ];
 
 export default screens;

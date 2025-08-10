@@ -19,7 +19,7 @@ const dashBoardItems: DashboardCards[] = [
     {
       title: "Send",
       icon: "swap-horizontal-outline",
-      goto: "/" as AppRoute,
+      goto: "/pages/SendMoney" as AppRoute,
     },
     { 
       title: "Bills", 
