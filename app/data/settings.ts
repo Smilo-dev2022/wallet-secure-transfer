@@ -8,28 +8,35 @@ const settingsArr = [
     title: "Account Settings",
     description: "View your account details",
     icon: "person-circle-outline",
-    goTo: "/pages/AccountSettings" as AppRoute
+    goTo: "/pages/AccountSettings" as AppRoute,
   },
   {
     id: 2,
     title: "Notifications",
     description: "Change notification preferences",
     icon: "notifications-outline",
-    goTo: '/' as AppRoute
+    goTo: "/" as AppRoute,
   },
-    {
+  {
     id: 3,
     title: "Your Bills",
     description: "Monitor your bills",
     icon: "wallet-outline",
-    goTo: '/' as AppRoute
+    goTo: "/pages/Bills" as AppRoute,
   },
-    {
+  {
     id: 4,
     title: "About",
     description: "App version and policy",
     icon: "alert-circle",
-    goTo: '/' as AppRoute
+    goTo: "/" as AppRoute,
+  },
+  {
+    id: 5,
+    title: "Support",
+    description: "Support and FAQ",
+    icon: "help-circle-outline",
+    goTo: "/" as AppRoute,
   },
 ];
 

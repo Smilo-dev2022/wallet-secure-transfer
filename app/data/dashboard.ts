@@ -11,38 +11,41 @@ type DashboardCards = {
 };
 
 const dashBoardItems: DashboardCards[] = [
+  {
+    title: "Wallet",
+    icon: "wallet-outline",
+    goto: "/pages/Wallet" as AppRoute,
+  },
+  {
+    title: "Send",
+    icon: "swap-horizontal-outline",
+    goto: "/pages/SendMoney" as AppRoute,
+  },
+  {
+    title: "Bills",
+    icon: "receipt-outline",
+    goto: "/pages/Bills" as AppRoute,
+  },
+  {
+    title: "QR Code",
+    icon: "qr-code-outline",
+    goto: "/" as AppRoute,
+  },
+  {
+    title: "Verification",
+    icon: "shield-checkmark-outline",
+    goto: "/" as AppRoute,
+  },
+  {
+    title: "Notifications",
+    icon: "notifications-outline",
+    goto: "/" as AppRoute,
+  },
     {
-      title: "Wallet",
-      icon: "wallet-outline",
-      goto: "/pages/Wallet" as AppRoute,
-    },
-    {
-      title: "Send",
-      icon: "swap-horizontal-outline",
-      goto: "/pages/SendMoney" as AppRoute,
-    },
-    { 
-      title: "Bills", 
-      icon: "receipt-outline", 
-      goto: "/" as AppRoute },
-    { 
-      title: "QR Code", 
-      icon: "qr-code-outline", 
-      goto: "/" as AppRoute },
-    { 
-      title: "Support", 
-      icon: "help-circle-outline", 
-      goto: "/" as AppRoute },
-    {
-      title: "Verification",
-      icon: "shield-checkmark-outline",
-      goto: "/" as AppRoute,
-    },
-    {
-      title: "Notifications",
-      icon: "notifications-outline",
-      goto: "/" as AppRoute,
-    },
-  ];
+    title: "Settings",
+    icon: "settings-outline",
+    goto: "/pages/Settings" as AppRoute,
+  },
+];
 
-export default dashBoardItems
+export default dashBoardItems;
