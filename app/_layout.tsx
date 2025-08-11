@@ -5,7 +5,7 @@ import screens from "./data/screens";
 export default function RootLayout() {
   return (
     <SafeAreaProvider>
-      <Stack initialRouteName="pages/Wallet">
+      <Stack>
         {screens.map((screen) => (
           <Stack.Screen 
             key={screen.name}

@@ -3,19 +3,21 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import supabase from "./lib/supabase";
 import Wallet from "./pages/Wallet";
+import Auth from "./auth/Auth";
+import Account from "./auth/UserAccount";
 
 export default function Index() {
-  const [session, setSession] = useState<Session | null>(null)
+  const [session, setSession] = useState<Session | null>(null);
 
-   useEffect(() => {
-    supabase.auth.getSession().then(({ data: {session} }) => {
-      setSession(session)
-    })
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-   }, [])
+      setSession(session);
+    });
+  }, []);
 
   return (
     <View
@@ -24,7 +26,11 @@ export default function Index() {
         justifyContent: "center",
       }}
     >
-        { session && session.user && <Wallet /> }
+      {session && session.user ? (
+        <Account key={session.user.id} session={session} />
+      ) : (
+        <Auth />
+      )}
     </View>
   );
 }
