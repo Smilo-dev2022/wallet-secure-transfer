@@ -12,8 +12,10 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import accountSettingsStyles from "../styles/accountSettingStyles";
 // import Footer from "../components/Footer";
+import supabase from "../lib/supabase";
 
 export default function AccountSettings() {
   const [imageUri, setImageUri] = useState<string>(
@@ -23,6 +25,7 @@ export default function AccountSettings() {
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [showPasswords, setShowPasswords] = useState<boolean>(false);
+  const router = useRouter();
 
   const pickImage = async () => {
     try {
@@ -82,8 +85,19 @@ export default function AccountSettings() {
     );
   };
 
-  const onLogout = () => {
-    Alert.alert("Logout", "This will log you out (stub).");
+  const onLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert("Logged Out", "You have been logged out successfully.");
+        router.replace("/auth/Login"); // Redirect to Login page
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      Alert.alert("Error", "An unexpected error occurred during logout.");
+    }
   };
 
   const openCamera = async () => {
@@ -214,7 +228,12 @@ export default function AccountSettings() {
               style={accountSettingsStyles.logoutButton}
               onPress={onLogout}
             >
-              <Text style={accountSettingsStyles.logoutText}>Logout</Text>
+              <Text
+                style={accountSettingsStyles.logoutText}
+                onPress={() => supabase.auth.signOut()}
+              >
+                Logout
+              </Text>
             </TouchableOpacity>
           </ScrollView>
         </View>

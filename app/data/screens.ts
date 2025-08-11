@@ -67,7 +67,7 @@ const screens = [
     } as NativeStackNavigationOptions,
   },
   {
-    name: "pages/About",
+    name: "pages/Landing",
     options: {
       headerShown: true,
       headerTintColor: "#fff",
