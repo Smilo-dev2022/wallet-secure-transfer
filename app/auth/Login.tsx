@@ -30,7 +30,7 @@ export default function Login() {
       <View style={loginStyles.form}>
         <Text style={loginStyles.label}>Number</Text>
         <TextInput
-          placeholder="Enter your number +2700000000"
+          placeholder="+2700000000"
           placeholderTextColor="#999"
           style={loginStyles.input}
           value={phone}
