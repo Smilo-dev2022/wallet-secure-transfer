@@ -1,68 +1,44 @@
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useState, useEffect } from "react";
-import supabase from "./lib/supabase";
+import { useAuth, AuthProvider } from "./auth/AuthProvider";
 import screens from "./data/screens";
 
-export default function RootLayout() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+function LayoutContent() {
   const [showSplash, setShowSplash] = useState(true);
-  const router = useRouter();
+  const { initialized, user } = useAuth();
 
   useEffect(() => {
     const splashTimer = setTimeout(() => {
       setShowSplash(false);
-    }, 2000);
+    }, 5000);
 
-    const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-        router.replace("/auth/Login");
-      }
-    };
-
-    checkAuth();
-
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        if (session) {
-          setIsAuthenticated(true);
-        } else {
-          setIsAuthenticated(false);
-          router.replace("/auth/Login");
-        }
-      }
-    );
-
-    return () => {
-      clearTimeout(splashTimer);
-      listener?.subscription.unsubscribe();
-    };
+    return () => clearTimeout(splashTimer);
   }, []);
 
   if (showSplash) {
     return (
       <SafeAreaProvider>
-        <Stack>
+        <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen
             name="pages/SplashPage"
-            options={{ headerShown: false }}
           />
         </Stack>
       </SafeAreaProvider>
     );
   }
 
-  if (!isAuthenticated) {
+  if (!initialized) {
+    return null;
+  }
+
+  if (!user) {
     return (
       <SafeAreaProvider>
-        <Stack>
-          <Stack.Screen name="pages/Landing" options={{ headerShown: false }} />
-          <Stack.Screen name="auth/Login" options={{ headerShown: false }} />
-          <Stack.Screen name="auth/Signup" options={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="pages/Landing" />
+          <Stack.Screen name="auth/Login"  />
+          <Stack.Screen name="auth/Signup" />
         </Stack>
       </SafeAreaProvider>
     );
@@ -81,4 +57,12 @@ export default function RootLayout() {
       </Stack>
     </SafeAreaProvider>
   );
+}
+
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <LayoutContent />
+    </AuthProvider>
+  )
 }
