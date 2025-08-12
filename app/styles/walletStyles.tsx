@@ -11,6 +11,7 @@ const walletStyles = StyleSheet.create({
   userInfo: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: 'space-between',
     marginBottom: 30,
   },
   avatar: {
@@ -22,9 +23,10 @@ const walletStyles = StyleSheet.create({
     borderColor: "#F97316",
   },
   userName: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "600",
     color: "white",
+    marginLeft: 6
   },
 
   walletCard: {
