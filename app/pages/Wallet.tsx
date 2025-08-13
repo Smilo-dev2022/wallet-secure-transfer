@@ -2,8 +2,24 @@ import { View, Text, Image, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import walletStyles from "../styles/walletStyles";
 import Footer from "../components/Footer";
+import supabase from "../lib/supabase";
+import { useRouter } from "expo-router";
+import { useEffect } from "react";
 
 export default function Wallet() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession();
+      if(!data.session) {
+        router.replace("/auth/Login")
+      }
+    }
+
+    checkAuth()
+  })
+
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
       <ScrollView

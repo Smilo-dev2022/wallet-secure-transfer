@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const aboutStyles = StyleSheet.create({
+const landingStyles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#0084ff",
@@ -70,4 +70,4 @@ const aboutStyles = StyleSheet.create({
   },
 });
 
-export default aboutStyles
+export default landingStyles

@@ -67,16 +67,10 @@ const screens = [
     } as NativeStackNavigationOptions,
   },
   {
-    name: "pages/About",
+    name: "pages/Landing",
     options: {
-      headerShown: true,
-      headerTintColor: "#fff",
-      headerStyle: { backgroundColor: "#344d92ff", zIndex: 5 },
-      headerBackVisible: false,
-      zIndex: 5,
-      headerTitle: "",
-      animation: "slide_from_right",
-      animationDuration: 450,
+      headerShown: false,
+      animation: "none",
     } as NativeStackNavigationOptions,
   },
   {
