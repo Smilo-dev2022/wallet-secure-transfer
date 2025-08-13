@@ -66,7 +66,6 @@ export default function Wallet() {
     }
   };
 
-export default function Wallet() {
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
       <ScrollView

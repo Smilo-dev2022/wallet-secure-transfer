@@ -1,30 +1,14 @@
-import { Session } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
-import { View } from "react-native";
-import supabase from "./lib/supabase";
+import { useAuth } from "./auth/AuthProvider";
 import Wallet from "./pages/Wallet";
+import Landing from "./pages/Landing";
+import { View } from "react-native";
 
 export default function Index() {
-  const [session, setSession] = useState<Session | null>(null)
-
-   useEffect(() => {
-    supabase.auth.getSession().then(({ data: {session} }) => {
-      setSession(session)
-    })
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-   }, [])
+  const { user } = useAuth()
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-      }}
-    >
-        { session && session.user && <Wallet /> }
+    <View style={{ flex: 1 }}>
+      { user ? <Wallet key={user.id} /> : <Landing />}
     </View>
-  );
+  )
 }

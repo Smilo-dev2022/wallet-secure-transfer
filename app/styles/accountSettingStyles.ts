@@ -4,14 +4,20 @@ const accountSettingsStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#37539fff",
+    alignItems: "center",
+    paddingHorizontal: 20, 
+    paddingTop: 5
   },
   content: {
     paddingBottom: 10,
     alignItems: "center",
+    width: "100%",
+    maxWidth: 480,
   },
   profileContainer: {
     position: "relative",
     marginBottom: 12,
+    marginTop: 5
   },
   profileImage: {
     width: 110,
@@ -48,6 +54,7 @@ const accountSettingsStyles = StyleSheet.create({
 
   inputGroup: {
     width: "100%",
+    maxWidth: 480,
     marginBottom: 14,
   },
   label: {
@@ -66,6 +73,7 @@ const accountSettingsStyles = StyleSheet.create({
 
   sectionHeader: {
     width: "100%",
+    maxWidth: 480,
     marginTop: 8,
     marginBottom: 8,
   },
@@ -98,6 +106,7 @@ const accountSettingsStyles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 18,
     width: "100%",
+    maxWidth: 480,
   },
   saveText: {
     color: "white",
@@ -112,6 +121,7 @@ const accountSettingsStyles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 12,
     width: "100%",
+    maxWidth: 480,
   },
   logoutText: {
     color: "white",
@@ -120,10 +130,11 @@ const accountSettingsStyles = StyleSheet.create({
     textAlign: "center",
   },
   scrollContent: {
-  padding: 1,
-  alignItems: "center",
-  backgroundColor: "#37539fff",
-}
+    padding: 1,
+    alignItems: "center",
+    backgroundColor: "#37539fff",
+    flexGrow: 1,
+  },
 });
 
-export default accountSettingsStyles
+export default accountSettingsStyles;
