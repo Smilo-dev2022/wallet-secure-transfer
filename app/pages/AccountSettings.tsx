@@ -3,11 +3,11 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -19,17 +19,51 @@ import supabase from "../lib/supabase";
 
 export default function AccountSettings() {
   const [imageUri, setImageUri] = useState<string | null>(null);
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [showPasswords, setShowPasswords] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [color, setColor] = useState("");
+  const [message, setMessage] = useState("");
   const router = useRouter();
   const { signOut, user } = useAuth();
 
   useEffect(() => {
-    if (user) fetchProfilePicture();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (user) {
+      fetchProfilePicture();
+      changeEmail();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  const updatePassword = async () => {
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+      setColor("red");
+      return;
+    }
+
+    try {
+      // Use the Supabase Auth method to update the password
+      const { error } = await supabase.auth.updateUser({
+        password: password,
+      });
+
+      if (error) {
+        console.error("Error changing password", error);
+        setMessage("Error: " + error.message);
+        setColor("red");
+      } else {
+        setPassword("");
+        setConfirmPassword("");
+        setMessage("Password updated successfully");
+        setColor("green");
+      }
+    } catch (error) {
+      console.error("Error changing password", error);
+      setMessage("An unexpected error occurred");
+      setColor("red");
+    }
+  };
 
   const fetchProfilePicture = async () => {
     const { data: profile, error } = await supabase
@@ -56,48 +90,48 @@ export default function AccountSettings() {
     }
   };
 
-const uploadProfilePicture = async (uri: string) => {
-  if (!user) return;
+  const uploadProfilePicture = async (uri: string) => {
+    if (!user) return;
 
-  try {
-    const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
-    const fileName = `${user.id}.${fileExt}`;
-    const filePath = fileName;
+    try {
+      const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+      const fileName = `${user.id}.${fileExt}`;
+      const filePath = fileName;
 
-    const response = await fetch(uri);
-    const arrayBuffer = await response.arrayBuffer();
-    
-    const { error: uploadError } = await supabase.storage
-      .from("profile-pictures")
-      .upload(filePath, arrayBuffer, {
-        contentType: `image/${fileExt}`,
-        upsert: true,
-      });
+      const response = await fetch(uri);
+      const arrayBuffer = await response.arrayBuffer();
 
-    if (uploadError) {
-      console.error("Upload error:", uploadError);
-      Alert.alert("Error", "Failed to update profile");
-      return;
+      const { error: uploadError } = await supabase.storage
+        .from("profile-pictures")
+        .upload(filePath, arrayBuffer, {
+          contentType: `image/${fileExt}`,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        Alert.alert("Error", "Failed to update profile");
+        return;
+      }
+
+      const { error: dbError } = await supabase
+        .from("profile")
+        .update({ avatar_url: filePath })
+        .eq("id", user.id);
+
+      if (dbError) {
+        console.error("DB update error:", dbError);
+        Alert.alert("Error", "Failed to update profile.");
+        return;
+      }
+
+      fetchProfilePicture();
+      Alert.alert("Success", "Profile picture updated.");
+    } catch (error) {
+      console.error("Upload exception:", error);
+      Alert.alert("Error", "Unexpected error occurred.");
     }
-
-    const { error: dbError } = await supabase
-      .from("profile")
-      .update({ avatar_url: filePath })
-      .eq("id", user.id);
-
-    if (dbError) {
-      console.error("DB update error:", dbError);
-      Alert.alert("Error", "Failed to update profile.");
-      return;
-    }
-
-    fetchProfilePicture();
-    Alert.alert("Success", "Profile picture updated.");
-  } catch (error) {
-    console.error("Upload exception:", error);
-    Alert.alert("Error", "Unexpected error occurred.");
-  }
-};
+  };
 
   const pickImage = async () => {
     try {
@@ -127,34 +161,29 @@ const uploadProfilePicture = async (uri: string) => {
     }
   };
 
-  const onSave = () => {
-    if (newPassword || confirmPassword) {
-      if (newPassword !== confirmPassword) {
-        Alert.alert(
-          "Passwords do not match",
-          "New password and confirm must match"
-        );
-        return;
-      }
-      if (!currentPassword) {
-        Alert.alert(
-          "Current password required",
-          "Enter your current password to change it"
-        );
-        return;
-      }
+  const changeEmail = async () => {
+    const { error } = await supabase
+      .from("profile")
+      .update({ email })
+      .eq("id", user?.id)
+      .select();
+
+    if (error) {
+      console.error("Error changing your email", error);
     }
 
-    console.log({
-      imageUri,
-      currentPassword,
-      newPassword,
-    });
+    if (email) {
+      setEmail(email);
+    }
+  };
 
-    Alert.alert(
-      "Saved",
-      "Changes saved locally (stub). Hook this to your API."
-    );
+  const onSave = () => {
+    changeEmail();
+    updatePassword();
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    return;
   };
 
   const onLogout = async () => {
@@ -234,6 +263,18 @@ const uploadProfilePicture = async (uri: string) => {
             </Text>
           </TouchableOpacity>
 
+          <View style={accountSettingsStyles.inputGroup}>
+            <Text style={accountSettingsStyles.label}>Your email</Text>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              style={accountSettingsStyles.input}
+              placeholder="user@mail.com"
+              placeholderTextColor="#9CA3AF"
+              autoCapitalize="none"
+            />
+          </View>
+
           <View style={[accountSettingsStyles.sectionHeader]}>
             <Text style={accountSettingsStyles.sectionTitle}>
               Change Password
@@ -244,32 +285,13 @@ const uploadProfilePicture = async (uri: string) => {
           </View>
 
           <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>Current Password</Text>
-            <View style={accountSettingsStyles.passwordRow}>
-              <TextInput
-                value={currentPassword}
-                onChangeText={setCurrentPassword}
-                style={[
-                  accountSettingsStyles.input,
-                  accountSettingsStyles.passwordInput,
-                ]}
-                placeholder="Current password"
-                placeholderTextColor="#9CA3AF"
-                secureTextEntry={!showPasswords}
-                autoCapitalize="none"
-              />
-            </View>
-          </View>
-
-          <View style={accountSettingsStyles.inputGroup}>
             <Text style={accountSettingsStyles.label}>New Password</Text>
             <TextInput
-              value={newPassword}
-              onChangeText={setNewPassword}
+              value={password}
+              onChangeText={setPassword}
               style={accountSettingsStyles.input}
               placeholder="New password"
               placeholderTextColor="#9CA3AF"
-              secureTextEntry={!showPasswords}
               autoCapitalize="none"
             />
           </View>
@@ -284,9 +306,11 @@ const uploadProfilePicture = async (uri: string) => {
               style={accountSettingsStyles.input}
               placeholder="Confirm new password"
               placeholderTextColor="#9CA3AF"
-              secureTextEntry={!showPasswords}
               autoCapitalize="none"
             />
+            <Text style={{ color: color, fontSize: 12, fontWeight: "bold" }}>
+              {message}
+            </Text>
           </View>
 
           <TouchableOpacity
