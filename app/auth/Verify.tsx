@@ -11,7 +11,7 @@ import {
 import verifyPageStyles from "../styles/verifyPageStyles";
 import supabase from "../lib/supabase";
 import { useRouter } from "expo-router";
-
+ 
 export default function Verify() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
