@@ -11,11 +11,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
+import React, { useState } from "react";
 import accountSettingsStyles from "../styles/accountSettingStyles";
-import { useAuth } from "../auth/AuthProvider";
-import supabase from "../lib/supabase";
+// import Footer from "../components/Footer";
 
 export default function AccountSettings() {
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -154,7 +152,7 @@ export default function AccountSettings() {
 
       if (!result.canceled) {
         const uri = result.assets?.[0]?.uri ?? (result as any).uri;
-        if (uri) uploadProfilePicture(uri);
+        if (uri) setImageUri(uri);
       }
     } catch (error) {
       console.error("Image pick error", error);
@@ -186,16 +184,8 @@ export default function AccountSettings() {
     return;
   };
 
-  const onLogout = async () => {
-    try {
-      if (signOut) {
-        Alert.alert("Logged Out", "You have been logged out successfully.");
-        router.replace("/auth/Login");
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-      Alert.alert("Error", "An unexpected error occurred during logout.");
-    }
+  const onLogout = () => {
+    Alert.alert("Logout", "This will log you out (stub).");
   };
 
   const openCamera = async () => {
@@ -219,7 +209,7 @@ export default function AccountSettings() {
 
       if (!result.canceled) {
         const uri = result.assets?.[0]?.uri ?? (result as any).uri;
-        if (uri) uploadProfilePicture(uri);
+        if (uri) setImageUri(uri);
       }
     } catch (error) {
       console.error("Camera error", error);
@@ -227,41 +217,47 @@ export default function AccountSettings() {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      style={{ flex: 1 }}
-    >
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingVertical: 0,
-        }}
-        showsVerticalScrollIndicator={false}
+    <View style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={accountSettingsStyles.container}
       >
-        <View style={accountSettingsStyles.container}>
-          <View style={accountSettingsStyles.profileContainer}>
-            <Image
-              source={{ uri: imageUri! }}
-              style={accountSettingsStyles.profileImage}
-            />
-            <TouchableOpacity style={accountSettingsStyles.editIcon}>
-              <Ionicons
-                name="camera"
-                size={18}
-                color={"white"}
-                onPress={openCamera}
-              />
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity
-            style={accountSettingsStyles.uploadButton}
-            onPress={pickImage}
+        <View style={accountSettingsStyles.content}>
+          <ScrollView
+            contentContainerStyle={accountSettingsStyles.scrollContent}
+            showsVerticalScrollIndicator={false}
           >
-            <Text style={accountSettingsStyles.uploadText}>
-              Upload New Photo
-            </Text>
-          </TouchableOpacity>
+            <View style={accountSettingsStyles.profileContainer}>
+              <Image
+                source={{ uri: imageUri }}
+                style={accountSettingsStyles.profileImage}
+              />
+              <TouchableOpacity style={accountSettingsStyles.editIcon}>
+                <Ionicons
+                  name="camera"
+                  size={18}
+                  color={"white"}
+                  onPress={openCamera}
+                />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={accountSettingsStyles.uploadButton}
+              onPress={pickImage}
+            >
+              <Text style={accountSettingsStyles.uploadText}>
+                Upload New Photo
+              </Text>
+            </TouchableOpacity>
+
+            <View style={[accountSettingsStyles.sectionHeader]}>
+              <Text style={accountSettingsStyles.sectionTitle}>
+                Change Password
+              </Text>
+              <Text style={accountSettingsStyles.sectionNote}>
+                Leave blank if you don&apos;t want to change your password
+              </Text>
+            </View>
 
           <View style={accountSettingsStyles.inputGroup}>
             <Text style={accountSettingsStyles.label}>Your email</Text>
@@ -313,21 +309,23 @@ export default function AccountSettings() {
             </Text>
           </View>
 
-          <TouchableOpacity
-            style={accountSettingsStyles.saveButton}
-            onPress={onSave}
-          >
-            <Text style={accountSettingsStyles.saveText}>Save Changes</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={accountSettingsStyles.saveButton}
+              onPress={onSave}
+            >
+              <Text style={accountSettingsStyles.saveText}>Save Changes</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            style={accountSettingsStyles.logoutButton}
-            onPress={onLogout}
-          >
-            <Text style={accountSettingsStyles.logoutText}>Logout</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={accountSettingsStyles.logoutButton}
+              onPress={onLogout}
+            >
+              <Text style={accountSettingsStyles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      {/* <Footer /> */}
+    </View>
   );
 }

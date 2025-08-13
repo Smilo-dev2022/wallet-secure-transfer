@@ -1,4 +1,5 @@
-import { Link, useRouter } from "expo-router";
+
+import { Link, useRouter  } from "expo-router";
 import React, { useState } from "react";
 import { Button, Text, TextInput, View, Alert } from "react-native";
 import loginStyles from "../styles/loginStyles";
@@ -6,14 +7,14 @@ import supabase from "../lib/supabase";
 
 export default function Login() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithPhone() {
+  async function signInWithEmail() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
-      phone: phone,
+      email: email,
       password: password,
     });
 
@@ -28,13 +29,13 @@ export default function Login() {
   return (
     <View style={loginStyles.container}>
       <View style={loginStyles.form}>
-        <Text style={loginStyles.label}>Number</Text>
+        <Text style={loginStyles.label}>Username</Text>
         <TextInput
-          placeholder="+2700000000"
+          placeholder="Enter your email"
           placeholderTextColor="#999"
           style={loginStyles.input}
-          value={phone}
-          onChangeText={(text) => setPhone(text)}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           autoCapitalize={"none"}
         />
 
@@ -45,7 +46,6 @@ export default function Login() {
           style={loginStyles.input}
           value={password}
           onChangeText={(text) => setPassword(text)}
-          secureTextEntry
         />
 
         <View style={loginStyles.buttonContainer}>
@@ -53,7 +53,7 @@ export default function Login() {
             title="Login"
             color="#F97316"
             disabled={loading}
-            onPress={() => signInWithPhone()}
+            onPress={() => signInWithEmail()}
           />
         </View>
 

@@ -2,14 +2,30 @@ import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
 import supabase from "../lib/supabase";
 import signupStyles from "../styles/signupStyles";
-import { Link, useRouter } from "expo-router";
+
+import { Link } from "expo-router";
 
 export default function Signup() {
-  const router = useRouter();
-  const [phone, setPhone] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [phone, setPhone] = useState("");
+
+  // async function signUpWithEmail() {
+  //   setLoading(true);
+  //   const {
+  //     data: { session },
+  //     error,
+  //   } = await supabase.auth.signUp({
+  //     email: email,
+  //     password: password,
+  //   });
+
+  //   if (error) Alert.alert(error.message);
+  //   if (!session) Alert.alert("please check your email for verification");
+  //   setLoading(false);
+  // }
 
   async function signUpWithPhone() {
     setLoading(true);
@@ -20,11 +36,6 @@ export default function Signup() {
     } = await supabase.auth.signUp({
       phone: phone,
       password: password,
-      options: {
-        data: {
-          full_name: name,
-        },
-      },
     });
 
     if (error) {
@@ -51,6 +62,15 @@ export default function Signup() {
           value={name}
           onChangeText={(text) => setName(text)}
         />
+
+        {/* <Text style={signupStyles.label}>Email</Text>
+        <TextInput
+          placeholder="Enter your email"
+          placeholderTextColor="#999"
+          style={signupStyles.input}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        /> */}
 
         <Text style={signupStyles.label}>Phone Number</Text>
         <TextInput
@@ -80,7 +100,7 @@ export default function Signup() {
           />
         </View>
         <View style={signupStyles.centeredContainer}>
-          <Link href="/auth/Login" style={signupStyles.loginLink}>
+          <Link href="/auth/Signup" style={signupStyles.loginLink}>
             <Text style={signupStyles.loginLinkText}>
               Already have an account?{" "}
               <Text style={signupStyles.loginBold}>Login</Text>

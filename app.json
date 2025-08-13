@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/wallet-icon.jpeg",
-    "scheme": "com.supabase",
+    "scheme": "walletsecuretransfer",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
