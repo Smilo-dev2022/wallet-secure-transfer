@@ -30,8 +30,11 @@ export default function Signup() {
     if (error) {
       Alert.alert("Error", error.message);
     } else {
-      Alert.alert("Success", "Account created successfully!");
-      router.replace("/pages/Dashboard");
+      Alert.alert(
+        "Success",
+        "Account created successfully! Please verify your phone number."
+      );
+      router.replace("/auth/Verify");
     }
     if (!session) Alert.alert("Please check your inbox for sms verification!");
     setLoading(false);

@@ -20,7 +20,7 @@ export default function Login() {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.replace("/pages/Wallet")
+      router.replace("/pages/Wallet");
     }
     setLoading(false);
   }
@@ -63,6 +63,15 @@ export default function Login() {
               Don&apos;t have ann account?{" "}
               <Text style={[loginStyles.loginBold, { color: "#0082ff" }]}>
                 Sign Up
+              </Text>
+            </Text>
+          </Link>
+
+          <Link href="/auth/Verify" style={loginStyles.loginLink}>
+            <Text style={loginStyles.loginLinkText}>
+              Login with pin{" "}
+              <Text style={[loginStyles.loginBold, { color: "#0082ff" }]}>
+                Pin
               </Text>
             </Text>
           </Link>
