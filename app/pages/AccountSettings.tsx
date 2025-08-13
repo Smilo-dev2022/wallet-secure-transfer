@@ -3,11 +3,11 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   Alert,
+  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -16,13 +16,120 @@ import accountSettingsStyles from "../styles/accountSettingStyles";
 // import Footer from "../components/Footer";
 
 export default function AccountSettings() {
-  const [imageUri, setImageUri] = useState<string>(
-    "../../assets/images/wallet-icon.jpeg"
-  );
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [showPasswords, setShowPasswords] = useState<boolean>(false);
+  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [color, setColor] = useState("");
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const { signOut, user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      fetchProfilePicture();
+      changeEmail();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const updatePassword = async () => {
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+      setColor("red");
+      return;
+    }
+
+    try {
+      // Use the Supabase Auth method to update the password
+      const { error } = await supabase.auth.updateUser({
+        password: password,
+      });
+
+      if (error) {
+        console.error("Error changing password", error);
+        setMessage("Error: " + error.message);
+        setColor("red");
+      } else {
+        setPassword("");
+        setConfirmPassword("");
+        setMessage("Password updated successfully");
+        setColor("green");
+      }
+    } catch (error) {
+      console.error("Error changing password", error);
+      setMessage("An unexpected error occurred");
+      setColor("red");
+    }
+  };
+
+  const fetchProfilePicture = async () => {
+    const { data: profile, error } = await supabase
+      .from("profile")
+      .select("avatar_url")
+      .eq("id", user?.id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching profile picture", error);
+    }
+
+    if (profile?.avatar_url) {
+      const { data: signedData, error: signedError } = await supabase.storage
+        .from("profile-pictures")
+        .createSignedUrl(profile.avatar_url, 60 * 60);
+
+      if (signedError || !signedData) {
+        console.error("Signed error", signedError);
+        return;
+      }
+
+      setImageUri(signedData.signedUrl);
+    }
+  };
+
+  const uploadProfilePicture = async (uri: string) => {
+    if (!user) return;
+
+    try {
+      const fileExt = uri.split(".").pop()?.toLowerCase() || "jpg";
+      const fileName = `${user.id}.${fileExt}`;
+      const filePath = fileName;
+
+      const response = await fetch(uri);
+      const arrayBuffer = await response.arrayBuffer();
+
+      const { error: uploadError } = await supabase.storage
+        .from("profile-pictures")
+        .upload(filePath, arrayBuffer, {
+          contentType: `image/${fileExt}`,
+          upsert: true,
+        });
+
+      if (uploadError) {
+        console.error("Upload error:", uploadError);
+        Alert.alert("Error", "Failed to update profile");
+        return;
+      }
+
+      const { error: dbError } = await supabase
+        .from("profile")
+        .update({ avatar_url: filePath })
+        .eq("id", user.id);
+
+      if (dbError) {
+        console.error("DB update error:", dbError);
+        Alert.alert("Error", "Failed to update profile.");
+        return;
+      }
+
+      fetchProfilePicture();
+      Alert.alert("Success", "Profile picture updated.");
+    } catch (error) {
+      console.error("Upload exception:", error);
+      Alert.alert("Error", "Unexpected error occurred.");
+    }
+  };
 
   const pickImage = async () => {
     try {
@@ -52,34 +159,29 @@ export default function AccountSettings() {
     }
   };
 
-  const onSave = () => {
-    if (newPassword || confirmPassword) {
-      if (newPassword !== confirmPassword) {
-        Alert.alert(
-          "Passwords do not match",
-          "New password and confirm must match"
-        );
-        return;
-      }
-      if (!currentPassword) {
-        Alert.alert(
-          "Current password required",
-          "Enter your current password to change it"
-        );
-        return;
-      }
+  const changeEmail = async () => {
+    const { error } = await supabase
+      .from("profile")
+      .update({ email })
+      .eq("id", user?.id)
+      .select();
+
+    if (error) {
+      console.error("Error changing your email", error);
     }
 
-    console.log({
-      imageUri,
-      currentPassword,
-      newPassword,
-    });
+    if (email) {
+      setEmail(email);
+    }
+  };
 
-    Alert.alert(
-      "Saved",
-      "Changes saved locally (stub). Hook this to your API."
-    );
+  const onSave = () => {
+    changeEmail();
+    updatePassword();
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    return;
   };
 
   const onLogout = () => {
@@ -157,51 +259,55 @@ export default function AccountSettings() {
               </Text>
             </View>
 
-            <View style={accountSettingsStyles.inputGroup}>
-              <Text style={accountSettingsStyles.label}>Current Password</Text>
-              <View style={accountSettingsStyles.passwordRow}>
-                <TextInput
-                  value={currentPassword}
-                  onChangeText={setCurrentPassword}
-                  style={[
-                    accountSettingsStyles.input,
-                    accountSettingsStyles.passwordInput,
-                  ]}
-                  placeholder="Current password"
-                  placeholderTextColor="#9CA3AF"
-                  secureTextEntry={!showPasswords}
-                  autoCapitalize="none"
-                />
-              </View>
-            </View>
+          <View style={accountSettingsStyles.inputGroup}>
+            <Text style={accountSettingsStyles.label}>Your email</Text>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              style={accountSettingsStyles.input}
+              placeholder="user@mail.com"
+              placeholderTextColor="#9CA3AF"
+              autoCapitalize="none"
+            />
+          </View>
 
-            <View style={accountSettingsStyles.inputGroup}>
-              <Text style={accountSettingsStyles.label}>New Password</Text>
-              <TextInput
-                value={newPassword}
-                onChangeText={setNewPassword}
-                style={accountSettingsStyles.input}
-                placeholder="New password"
-                placeholderTextColor="#9CA3AF"
-                secureTextEntry={!showPasswords}
-                autoCapitalize="none"
-              />
-            </View>
+          <View style={[accountSettingsStyles.sectionHeader]}>
+            <Text style={accountSettingsStyles.sectionTitle}>
+              Change Password
+            </Text>
+            <Text style={accountSettingsStyles.sectionNote}>
+              Leave blank if you don&apos;t want to change your password
+            </Text>
+          </View>
 
-            <View style={accountSettingsStyles.inputGroup}>
-              <Text style={accountSettingsStyles.label}>
-                Confirm New Password
-              </Text>
-              <TextInput
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                style={accountSettingsStyles.input}
-                placeholder="Confirm new password"
-                placeholderTextColor="#9CA3AF"
-                secureTextEntry={!showPasswords}
-                autoCapitalize="none"
-              />
-            </View>
+          <View style={accountSettingsStyles.inputGroup}>
+            <Text style={accountSettingsStyles.label}>New Password</Text>
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              style={accountSettingsStyles.input}
+              placeholder="New password"
+              placeholderTextColor="#9CA3AF"
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={accountSettingsStyles.inputGroup}>
+            <Text style={accountSettingsStyles.label}>
+              Confirm New Password
+            </Text>
+            <TextInput
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              style={accountSettingsStyles.input}
+              placeholder="Confirm new password"
+              placeholderTextColor="#9CA3AF"
+              autoCapitalize="none"
+            />
+            <Text style={{ color: color, fontSize: 12, fontWeight: "bold" }}>
+              {message}
+            </Text>
+          </View>
 
             <TouchableOpacity
               style={accountSettingsStyles.saveButton}

@@ -38,8 +38,16 @@ export default function Signup() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
-    if (!session) Alert.alert("check sms message for verification");
+    if (error) {
+      Alert.alert("Error", error.message);
+    } else {
+      Alert.alert(
+        "Success",
+        "Account created successfully! Please verify your phone number."
+      );
+      router.replace("/auth/Verify");
+    }
+    if (!session) Alert.alert("Please check your inbox for sms verification!");
     setLoading(false);
   }
 

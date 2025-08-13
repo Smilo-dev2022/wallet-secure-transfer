@@ -14,7 +14,7 @@ const splashStyles = StyleSheet.create({
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
-    backgroundColor: '#FFD400',
+    backgroundColor: '#F97316',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 10,
