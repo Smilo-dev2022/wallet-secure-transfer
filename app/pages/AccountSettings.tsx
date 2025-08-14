@@ -43,7 +43,6 @@ export default function AccountSettings() {
     }
 
     try {
-      // Use the Supabase Auth method to update the password
       const { error } = await supabase.auth.updateUser({
         password: password,
       });
@@ -190,7 +189,7 @@ export default function AccountSettings() {
     try {
       if (signOut) {
         Alert.alert("Logged Out", "You have been logged out successfully.");
-        router.replace("/auth/Login");
+        router.replace("/pages/Landing");
       }
     } catch (error) {
       console.error("Logout error:", error);

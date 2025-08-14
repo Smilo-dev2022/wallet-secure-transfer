@@ -5,6 +5,7 @@ import dashBoardStyles from "../styles/dashboardStyles";
 import dashBoardItems from "../data/dashboard";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import Push from "../components/Push"
 
 export default function Dashboard() {
 
@@ -30,6 +31,7 @@ export default function Dashboard() {
           ))}
         </View>
       </ScrollView>
+      <Push />
       <Footer />
     </View>
   );
