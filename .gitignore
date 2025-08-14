@@ -26,7 +26,7 @@ npm-debug.*
 yarn-debug.*
 yarn-error.*
 
-app/lib/
+# app/lib/
 
 # macOS
 .DS_Store
