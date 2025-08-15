@@ -162,24 +162,36 @@ export default function AccountSettings() {
   };
 
   const changeEmail = async () => {
-    const { error } = await supabase
-      .from("profile")
-      .update({ email })
-      .eq("id", user?.id)
-      .select();
-
-    if (error) {
-      console.error("Error changing your email", error);
+    if (!email || email === '') {
+      console.error("Email cannot be empty")
+      return;
     }
 
-    if (email) {
-      setEmail(email);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        email: email
+      })
+
+      if (error) {
+        console.error("Error changing your email:", error)
+        return
+      }
+
+      alert("A verification email has been sent to your email address")
+    } catch (err) {
+      console.error("Unexpected error during email change", err)
     }
   };
 
   const onSave = () => {
-    changeEmail();
-    updatePassword();
+    if (email !== "") {
+      changeEmail();
+    }
+
+    if (password !== "") {
+      updatePassword();
+    }
+
     setEmail("");
     setPassword("");
     setConfirmPassword("");
@@ -308,8 +320,8 @@ export default function AccountSettings() {
           </View>
 
           <ButtonC
-            textStyles={accountSettingsStyles.logoutText}
-            btnStyles={accountSettingsStyles.logoutButton}
+            textStyles={accountSettingsStyles.saveText}
+            btnStyles={accountSettingsStyles.saveButton}
             btnTitle={"Save Changes"}
             functionToPass={onSave}
           />

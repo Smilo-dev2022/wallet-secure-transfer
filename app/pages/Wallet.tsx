@@ -10,6 +10,7 @@ import { useRouter } from "expo-router";
 export default function Wallet() {
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
+  const [balance, setBalance] = useState("")
   const { user } = useAuth();
   const router = useRouter()
 
@@ -21,6 +22,7 @@ export default function Wallet() {
     if (user) {
       fetchProfilePicture();
       fetchName();
+      fetchBalance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
@@ -66,6 +68,25 @@ export default function Wallet() {
     }
   };
 
+    const fetchBalance = async () => {
+    const { data: profile, error } = await supabase
+      .from("profile")
+      .select("wallet_balance")
+      .eq("id", user?.id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching user's balance", error);
+    }
+
+    if (profile?.wallet_balance !== undefined && profile?.wallet_balance !== null) {
+      const balanceValue = Number(profile.wallet_balance)
+      setBalance(`R ${balanceValue.toFixed(2)}`)
+    } else {
+      setBalance("R 0.00")
+    }
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#37539fff" }}>
       <ScrollView
@@ -96,7 +117,7 @@ export default function Wallet() {
 
         <View style={walletStyles.walletCard}>
           <Text style={walletStyles.walletLabel}>Wallet Balance</Text>
-          <Text style={walletStyles.walletAmount}>R 1,200.50</Text>
+          <Text style={walletStyles.walletAmount}>{balance}</Text>
         </View>
 
         <Text style={walletStyles.transactionsTitle}>Last 5 Transactions</Text>
