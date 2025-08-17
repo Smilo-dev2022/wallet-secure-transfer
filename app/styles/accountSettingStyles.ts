@@ -6,7 +6,7 @@ const accountSettingsStyles = StyleSheet.create({
     backgroundColor: "#37539fff",
     alignItems: "center",
     paddingHorizontal: 20, 
-    paddingTop: 5
+    paddingTop: 5,
   },
   content: {
     paddingBottom: 10,
@@ -17,7 +17,8 @@ const accountSettingsStyles = StyleSheet.create({
   profileContainer: {
     position: "relative",
     marginBottom: 12,
-    marginTop: 5
+    marginTop: 5,
+    paddingBottom: 5
   },
   profileImage: {
     width: 110,

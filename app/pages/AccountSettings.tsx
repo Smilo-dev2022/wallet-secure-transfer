@@ -7,7 +7,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -16,6 +15,8 @@ import { useRouter } from "expo-router";
 import accountSettingsStyles from "../styles/accountSettingStyles";
 import { useAuth } from "../auth/AuthProvider";
 import supabase from "../lib/supabase";
+import InputField from "../components/Inputs";
+import ButtonC from "../components/Button";
 
 export default function AccountSettings() {
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -43,7 +44,6 @@ export default function AccountSettings() {
     }
 
     try {
-      // Use the Supabase Auth method to update the password
       const { error } = await supabase.auth.updateUser({
         password: password,
       });
@@ -162,24 +162,36 @@ export default function AccountSettings() {
   };
 
   const changeEmail = async () => {
-    const { error } = await supabase
-      .from("profile")
-      .update({ email })
-      .eq("id", user?.id)
-      .select();
-
-    if (error) {
-      console.error("Error changing your email", error);
+    if (!email || email === '') {
+      console.error("Email cannot be empty")
+      return;
     }
 
-    if (email) {
-      setEmail(email);
+    try {
+      const { error } = await supabase.auth.updateUser({
+        email: email
+      })
+
+      if (error) {
+        console.error("Error changing your email:", error)
+        return
+      }
+
+      alert("A verification email has been sent to your email address")
+    } catch (err) {
+      console.error("Unexpected error during email change", err)
     }
   };
 
   const onSave = () => {
-    changeEmail();
-    updatePassword();
+    if (email !== "") {
+      changeEmail();
+    }
+
+    if (password !== "") {
+      updatePassword();
+    }
+
     setEmail("");
     setPassword("");
     setConfirmPassword("");
@@ -190,7 +202,7 @@ export default function AccountSettings() {
     try {
       if (signOut) {
         Alert.alert("Logged Out", "You have been logged out successfully.");
-        router.replace("/auth/Login");
+        router.replace("/pages/Landing");
       }
     } catch (error) {
       console.error("Logout error:", error);
@@ -263,17 +275,15 @@ export default function AccountSettings() {
             </Text>
           </TouchableOpacity>
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>Your email</Text>
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              style={accountSettingsStyles.input}
-              placeholder="user@mail.com"
-              placeholderTextColor="#9CA3AF"
-              autoCapitalize="none"
-            />
-          </View>
+          <InputField
+            value={email}
+            stateToPass={setEmail}
+            inputStyle={accountSettingsStyles.input}
+            styleView={accountSettingsStyles.inputGroup}
+            textStyle={accountSettingsStyles.label}
+            label={"Your email"}
+            placeholder={"user@mail.com"}
+          />
 
           <View style={[accountSettingsStyles.sectionHeader]}>
             <Text style={accountSettingsStyles.sectionTitle}>
@@ -284,48 +294,44 @@ export default function AccountSettings() {
             </Text>
           </View>
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>New Password</Text>
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              style={accountSettingsStyles.input}
-              placeholder="New password"
-              placeholderTextColor="#9CA3AF"
-              autoCapitalize="none"
-            />
-          </View>
+          <InputField
+            styleView={accountSettingsStyles.inputGroup}
+            textStyle={accountSettingsStyles.label}
+            label={"New Password"}
+            inputStyle={accountSettingsStyles.input}
+            value={password}
+            stateToPass={setPassword}
+            placeholder={"New Password"}
+          />
 
-          <View style={accountSettingsStyles.inputGroup}>
-            <Text style={accountSettingsStyles.label}>
-              Confirm New Password
-            </Text>
-            <TextInput
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              style={accountSettingsStyles.input}
-              placeholder="Confirm new password"
-              placeholderTextColor="#9CA3AF"
-              autoCapitalize="none"
-            />
+          <InputField
+            styleView={accountSettingsStyles.inputGroup}
+            textStyle={accountSettingsStyles.label}
+            label={"Confirm new Password"}
+            stateToPass={setConfirmPassword}
+            placeholder={"Confirm new password"}
+            inputStyle={accountSettingsStyles.input}
+            value={confirmPassword}
+          />
+          <View style={{ marginTop: -5 }}>
             <Text style={{ color: color, fontSize: 12, fontWeight: "bold" }}>
               {message}
             </Text>
           </View>
 
-          <TouchableOpacity
-            style={accountSettingsStyles.saveButton}
-            onPress={onSave}
-          >
-            <Text style={accountSettingsStyles.saveText}>Save Changes</Text>
-          </TouchableOpacity>
+          <ButtonC
+            textStyles={accountSettingsStyles.saveText}
+            btnStyles={accountSettingsStyles.saveButton}
+            btnTitle={"Save Changes"}
+            functionToPass={onSave}
+          />
 
-          <TouchableOpacity
-            style={accountSettingsStyles.logoutButton}
-            onPress={onLogout}
-          >
-            <Text style={accountSettingsStyles.logoutText}>Logout</Text>
-          </TouchableOpacity>
+          <ButtonC
+            textStyles={accountSettingsStyles.logoutText}
+            btnStyles={accountSettingsStyles.logoutButton}
+            btnTitle={"Logout"}
+            functionToPass={onLogout}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
