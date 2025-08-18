@@ -1,50 +1,78 @@
-# Welcome to your Expo app 👋
+The current README.md is the default Expo template and doesn't describe your specific project. Here's a rewritten version tailored for your repository, "iKasi Wallet - The World's Best Digital Wallet":
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+# iKasi Wallet
 
-1. Install dependencies
+**The World's Best Digital Wallet**
 
+A comprehensive digital wallet application built with React, TypeScript, and Supabase, featuring advanced financial services, cryptocurrency management, AI-powered advisory, and merchant tools.
+
+## Features
+
+- 💸 Send, receive, and manage digital & fiat currencies
+- 🔒 Secure wallet with advanced authentication
+- 🪙 Cryptocurrency management and exchange
+- 🤖 AI-powered financial advisory services
+- 🧾 Merchant & business tools
+- 📈 Real-time transaction tracking
+- 🌐 Built with React, TypeScript, Supabase, and Expo
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js & npm
+- Expo CLI (`npm install -g expo-cli`)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Smilo-dev2022/wallet-secure-transfer.git
+   cd wallet-secure-transfer
+   ```
+
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. Start the development server:
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. Open the app:
+   - On your device with Expo Go
+   - On an Android emulator or iOS simulator
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Project Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- `/app` - Main app source code (file-based routing with Expo)
+- `/components` - Reusable UI components
+- `/services` - API calls and business logic
+- `/types` - TypeScript types and interfaces
 
-## Get a fresh project
+## Scripts
 
-When you're ready, run:
+- `npm start` - Start the Expo development server
+- `npm run reset-project` - Reset to a blank project structure
 
-```bash
-npm run reset-project
-```
+## Learn More
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Documentation](https://react.dev/)
+- [Supabase Documentation](https://supabase.com/docs)
 
-## Learn more
+## Contributing
 
-To learn more about developing your project with Expo, look at the following resources:
+We welcome contributions! Please open an issue or submit a pull request.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## License
 
-## Join the community
+[MIT](LICENSE)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Let me know if you'd like to include project screenshots, API documentation, or other sections. If you want this README pushed to your repository, just confirm!
