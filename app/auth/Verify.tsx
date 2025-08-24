@@ -241,7 +241,6 @@ export default function Verify() {
 			style={verifyPageStyles.container}
 			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 		>
-			{/* Back button for both signup and login verification */}
 			{(isSignupVerification || isLoginVerification) && (
 				<TouchableOpacity
 					style={verifyPageStyles.backButton}
@@ -261,7 +260,6 @@ export default function Verify() {
 				</Text>
 			)}
 
-			{/* Only show phone input for standalone OTP verification (not used in current flow) */}
 			{!isSignupVerification && !isLoginVerification && (
 				<>
 					<TextInput
@@ -285,7 +283,6 @@ export default function Verify() {
 				</>
 			)}
 
-			{/* Show OTP input for all verification scenarios */}
 			<View style={verifyPageStyles.otpContainer}>
 				{otp.map((digit, index) => (
 					<TextInput
