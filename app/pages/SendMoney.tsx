@@ -34,9 +34,58 @@ export default function SendMoney() {
     fullName?: string;
   }
 
+  // Format phone number to enforce +27 format
+  const formatPhoneNumber = (text: string) => {
+    // Remove all non-digit characters except +
+    let cleaned = text.replace(/[^\d+]/g, '');
+    
+    // If it doesn't start with +, add it
+    if (!cleaned.startsWith('+')) {
+      cleaned = '+' + cleaned;
+    }
+    
+    // If it starts with + but not +27, enforce +27
+    if (cleaned.startsWith('+') && !cleaned.startsWith('+27')) {
+      // If user enters just +, add 27
+      if (cleaned === '+') {
+        cleaned = '+27';
+      } else if (cleaned.startsWith('+0')) {
+        // If user enters +0, replace with +27
+        cleaned = '+27' + cleaned.substring(2);
+      } else if (cleaned.startsWith('+')) {
+        // If user enters + followed by other numbers, enforce +27
+        cleaned = '+27' + cleaned.substring(1);
+      }
+    }
+    
+    // Limit to reasonable length (country code + 9 digits)
+    if (cleaned.length > 12) {
+      cleaned = cleaned.substring(0, 12);
+    }
+    
+    return cleaned;
+  };
+
+  const handleRecipientIdentifierChange = (text: string) => {
+    if (identifierType === "phone") {
+      const formatted = formatPhoneNumber(text);
+      setRecipientIdentifier(formatted);
+    } else {
+      setRecipientIdentifier(text);
+    }
+  };
+
   const handleVerifyRecipient = async () => {
     try {
       setIsVerifying(true);
+      
+      // Validate phone number format if phone is selected
+      if (identifierType === "phone" && (!recipientIdentifier.startsWith('+27') || recipientIdentifier.length < 12)) {
+        Alert.alert('Invalid Phone Number', 'Please enter a valid South African phone number starting with +27');
+        setIsVerifying(false);
+        return;
+      }
+
       const result = await verifyRecipient(recipientIdentifier, identifierType);
       if (result.exists) {
         setVerifiedRecipient(result);
@@ -115,10 +164,10 @@ export default function SendMoney() {
               placeholder={
                 identifierType === "email"
                   ? "Recipient email"
-                  : "Recipient phone"
+                  : "Recipient phone (+27 123 456 789)"
               }
               value={recipientIdentifier}
-              onChangeText={setRecipientIdentifier}
+              onChangeText={handleRecipientIdentifierChange}
               keyboardType={
                 identifierType === "email" ? "email-address" : "phone-pad"
               }

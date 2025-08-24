@@ -25,9 +25,15 @@ const loginStyles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 12,
-    marginBottom: 16,
+    marginBottom: 8,
     backgroundColor: "#f9f9f9",
     color: "#000",
+  },
+  helperText: {
+    fontSize: 12,
+    color: "#666",
+    marginBottom: 16,
+    fontStyle: "italic",
   },
   buttonContainer: {
     marginTop: 10,

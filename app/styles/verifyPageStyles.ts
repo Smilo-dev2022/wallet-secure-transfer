@@ -27,6 +27,13 @@ const verifyPageStyles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 24,
   },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    zIndex: 10,
+    padding: 8,
+  },
   otpContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
