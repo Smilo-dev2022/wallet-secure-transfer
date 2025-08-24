@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
 	Alert,
 	KeyboardAvoidingView,
@@ -19,6 +19,9 @@ export default function Verify() {
 	const [loading, setLoading] = useState(false);
 	const [phone, setPhone] = useState('');
 	const router = useRouter();
+
+	// Create refs for OTP input fields
+	const otpRefs = useRef<(TextInput | null)[]>([]);
 
 	// Get params to determine if this is signup verification or OTP login
 	const { mode, phoneNumber } = useLocalSearchParams();
@@ -76,25 +79,16 @@ export default function Verify() {
 
 		// Auto-focus next input if current input has a value
 		if (value && index < 5) {
-			// Focus next input
-			const nextInput = document.querySelector(
-				`input[data-index="${index + 1}"]`,
-			) as HTMLInputElement;
-			if (nextInput) {
-				nextInput.focus();
-			}
+			// Focus next input using ref
+			otpRefs.current[index + 1]?.focus();
 		}
 	};
 
 	const handleOtpKeyPress = (e: any, index: number) => {
 		// Handle backspace to go to previous input
 		if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
-			const prevInput = document.querySelector(
-				`input[data-index="${index - 1}"]`,
-			) as HTMLInputElement;
-			if (prevInput) {
-				prevInput.focus();
-			}
+			// Focus previous input using ref
+			otpRefs.current[index - 1]?.focus();
 		}
 	};
 
@@ -296,13 +290,15 @@ export default function Verify() {
 				{otp.map((digit, index) => (
 					<TextInput
 						key={index}
+						ref={(ref) => {
+							otpRefs.current[index] = ref;
+						}}
 						style={verifyPageStyles.otpInput}
 						value={digit}
 						onChangeText={(value) => handleOtpChange(value, index)}
 						onKeyPress={(e) => handleOtpKeyPress(e, index)}
 						keyboardType='number-pad'
 						maxLength={1}
-						data-index={index}
 						placeholder=''
 						placeholderTextColor='#9CA3AF'
 					/>
