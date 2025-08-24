@@ -14,7 +14,7 @@ import supabase from '../lib/supabase';
 import verifyPageStyles from '../styles/verifyPageStyles';
 
 export default function Verify() {
-	const [otp, setOtp] = useState('');
+	const [otp, setOtp] = useState(['', '', '', '', '', '']);
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [phone, setPhone] = useState('');
@@ -23,13 +23,14 @@ export default function Verify() {
 	// Get params to determine if this is signup verification or OTP login
 	const { mode, phoneNumber } = useLocalSearchParams();
 	const isSignupVerification = mode === 'signup';
+	const isLoginVerification = mode === 'login';
 
-	// If this is signup verification, use the phone number from params
+	// If this is signup or login verification, use the phone number from params
 	React.useEffect(() => {
-		if (isSignupVerification && phoneNumber) {
+		if ((isSignupVerification || isLoginVerification) && phoneNumber) {
 			setPhone(phoneNumber as string);
 		}
-	}, [isSignupVerification, phoneNumber]);
+	}, [isSignupVerification, isLoginVerification, phoneNumber]);
 
 	// Format phone number to enforce +27 format
 	const formatPhoneNumber = (text: string) => {
@@ -68,7 +69,40 @@ export default function Verify() {
 		setPhone(formatted);
 	};
 
-	const signInWithPin = async () => {
+	const handleOtpChange = (value: string, index: number) => {
+		const newOtp = [...otp];
+		newOtp[index] = value;
+		setOtp(newOtp);
+
+		// Auto-focus next input if current input has a value
+		if (value && index < 5) {
+			// Focus next input
+			const nextInput = document.querySelector(
+				`input[data-index="${index + 1}"]`,
+			) as HTMLInputElement;
+			if (nextInput) {
+				nextInput.focus();
+			}
+		}
+	};
+
+	const handleOtpKeyPress = (e: any, index: number) => {
+		// Handle backspace to go to previous input
+		if (e.nativeEvent.key === 'Backspace' && !otp[index] && index > 0) {
+			const prevInput = document.querySelector(
+				`input[data-index="${index - 1}"]`,
+			) as HTMLInputElement;
+			if (prevInput) {
+				prevInput.focus();
+			}
+		}
+	};
+
+	const getOtpString = () => {
+		return otp.join('');
+	};
+
+	const resendOTP = async () => {
 		try {
 			setLoading(true);
 			setError('');
@@ -91,12 +125,23 @@ export default function Verify() {
 				return false;
 			}
 
-			console.log('OTP sent successfully');
-			Alert.alert('OTP sent to your phone');
+			console.log('OTP resent successfully');
+			Alert.alert('OTP resent to your phone');
+
+			// Clear the OTP input for new code
+			setOtp(['', '', '', '', '', '']);
 		} catch (err: any) {
 			setError(err.message || 'An error occurred');
 		} finally {
 			setLoading(false);
+		}
+	};
+
+	const handleBack = () => {
+		if (isSignupVerification) {
+			router.replace('/auth/Signup');
+		} else if (isLoginVerification) {
+			router.replace('/auth/Login');
 		}
 	};
 
@@ -105,8 +150,9 @@ export default function Verify() {
 			setLoading(true);
 			setError('');
 
-			if (!otp) {
-				throw new Error('Please enter the OTP');
+			const otpString = getOtpString();
+			if (otpString.length !== 6) {
+				throw new Error('Please enter the complete 6-digit OTP');
 			}
 
 			if (isSignupVerification) {
@@ -115,7 +161,7 @@ export default function Verify() {
 				const { data: verifyData, error: verifyError } =
 					await supabase.auth.verifyOtp({
 						phone: phone,
-						token: otp,
+						token: otpString,
 						type: 'sms',
 					});
 
@@ -172,7 +218,7 @@ export default function Verify() {
 				// For OTP login, just verify the OTP
 				const { data, error } = await supabase.auth.verifyOtp({
 					phone: phone,
-					token: otp,
+					token: otpString,
 					type: 'sms',
 				});
 
@@ -196,21 +242,13 @@ export default function Verify() {
 		}
 	};
 
-	const handleBack = () => {
-		if (isSignupVerification) {
-			router.replace('/auth/Signup');
-		} else {
-			router.replace('/auth/Login');
-		}
-	};
-
 	return (
 		<KeyboardAvoidingView
 			style={verifyPageStyles.container}
 			behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 		>
-			{/* Back button for signup verification */}
-			{isSignupVerification && (
+			{/* Back button for both signup and login verification */}
+			{(isSignupVerification || isLoginVerification) && (
 				<TouchableOpacity
 					style={verifyPageStyles.backButton}
 					onPress={handleBack}
@@ -220,21 +258,21 @@ export default function Verify() {
 			)}
 
 			<Text style={verifyPageStyles.header}>
-				{isSignupVerification ? 'Verify Your Account' : 'Login with OTP'}
+				{isSignupVerification ? 'Verify Your Account' : 'Verify Your Login'}
 			</Text>
 
-			{isSignupVerification && (
+			{(isSignupVerification || isLoginVerification) && (
 				<Text style={verifyPageStyles.subtext}>
 					We&apos;ve sent a verification code to {phone}
 				</Text>
 			)}
 
-			{/* Only show phone input for OTP login, not for signup verification */}
-			{!isSignupVerification && (
+			{/* Only show phone input for standalone OTP verification (not used in current flow) */}
+			{!isSignupVerification && !isLoginVerification && (
 				<>
 					<TextInput
 						style={verifyPageStyles.input}
-						placeholder='Enter phone number (+1234567890)'
+						placeholder='Enter phone number (+27 123 456 789)'
 						value={phone}
 						onChangeText={handlePhoneChange}
 						keyboardType='phone-pad'
@@ -243,7 +281,7 @@ export default function Verify() {
 
 					<TouchableOpacity
 						style={verifyPageStyles.verifyButton}
-						onPress={signInWithPin}
+						onPress={resendOTP}
 						disabled={loading}
 					>
 						<Text style={verifyPageStyles.verifyText} disabled={loading}>
@@ -253,14 +291,23 @@ export default function Verify() {
 				</>
 			)}
 
-			{/* Show OTP input for both scenarios */}
-			<TextInput
-				style={verifyPageStyles.input}
-				placeholder='Enter OTP'
-				value={otp}
-				onChangeText={setOtp}
-				keyboardType='number-pad'
-			/>
+			{/* Show OTP input for all verification scenarios */}
+			<View style={verifyPageStyles.otpContainer}>
+				{otp.map((digit, index) => (
+					<TextInput
+						key={index}
+						style={verifyPageStyles.otpInput}
+						value={digit}
+						onChangeText={(value) => handleOtpChange(value, index)}
+						onKeyPress={(e) => handleOtpKeyPress(e, index)}
+						keyboardType='number-pad'
+						maxLength={1}
+						data-index={index}
+						placeholder=''
+						placeholderTextColor='#9CA3AF'
+					/>
+				))}
+			</View>
 
 			<TouchableOpacity
 				style={verifyPageStyles.verifyButton}
@@ -272,7 +319,7 @@ export default function Verify() {
 						? 'Verifying...'
 						: isSignupVerification
 						? 'Verify Account'
-						: 'Verify OTP'}
+						: 'Verify Login'}
 				</Text>
 			</TouchableOpacity>
 
@@ -281,7 +328,7 @@ export default function Verify() {
 				<Text style={verifyPageStyles.resendText}>
 					Didn&apos;t receive the code?{' '}
 				</Text>
-				<TouchableOpacity onPress={signInWithPin} disabled={loading}>
+				<TouchableOpacity onPress={resendOTP} disabled={loading}>
 					<Text style={verifyPageStyles.resendLink}>Resend</Text>
 				</TouchableOpacity>
 			</View>

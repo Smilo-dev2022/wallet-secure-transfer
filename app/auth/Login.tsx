@@ -13,12 +13,12 @@ export default function Login() {
 	const formatPhoneNumber = (text: string) => {
 		// Remove all non-digit characters except +
 		let cleaned = text.replace(/[^\d+]/g, '');
-		
+
 		// If it doesn't start with +, add it
 		if (!cleaned.startsWith('+')) {
 			cleaned = '+' + cleaned;
 		}
-		
+
 		// If it starts with + but not +27, enforce +27
 		if (cleaned.startsWith('+') && !cleaned.startsWith('+27')) {
 			// If user enters just +, add 27
@@ -32,12 +32,12 @@ export default function Login() {
 				cleaned = '+27' + cleaned.substring(1);
 			}
 		}
-		
+
 		// Limit to reasonable length (country code + 9 digits)
 		if (cleaned.length > 12) {
 			cleaned = cleaned.substring(0, 12);
 		}
-		
+
 		return cleaned;
 	};
 
@@ -51,7 +51,10 @@ export default function Login() {
 
 		// Validate phone number format
 		if (!phone.startsWith('+27') || phone.length < 12) {
-			Alert.alert('Invalid Phone Number', 'Please enter a valid South African phone number starting with +27');
+			Alert.alert(
+				'Invalid Phone Number',
+				'Please enter a valid South African phone number starting with +27',
+			);
 			setLoading(false);
 			return;
 		}
