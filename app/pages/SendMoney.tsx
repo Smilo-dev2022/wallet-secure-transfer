@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -15,54 +15,54 @@ import { verifyRecipient, transferMoney } from "../lib/supabase";
 import { useAuth } from "../auth/AuthProvider";
 import { useRouter } from "expo-router";
 import sendMoneyStyles from "../styles/sendMoneyStyles";
+import useUserStore from "../store/useUserStore";
 
 export default function SendMoney() {
+  //Zustand State
+  const verifiedRecipient = useUserStore((state) => state.verifiedRecipient);
+  const setVerifiedRecipient = useUserStore(
+    (state) => state.setVerifiedRecipient
+  );
+  //local state
   const [recipientIdentifier, setRecipientIdentifier] = useState("");
   const [identifierType, setIdentifierType] = useState("email");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
-  const [verifiedRecipient, setVerifiedRecipient] =
-    useState<VerifiedRecipient | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isTransferring, setIsTransferring] = useState(false);
+
   const { user } = useAuth();
   const router = useRouter();
-
-  interface VerifiedRecipient {
-    exists: boolean;
-    userId?: string;
-    fullName?: string;
-  }
 
   // Format phone number to enforce +27 format
   const formatPhoneNumber = (text: string) => {
     // Remove all non-digit characters except +
-    let cleaned = text.replace(/[^\d+]/g, '');
-    
+    let cleaned = text.replace(/[^\d+]/g, "");
+
     // If it doesn't start with +, add it
-    if (!cleaned.startsWith('+')) {
-      cleaned = '+' + cleaned;
+    if (!cleaned.startsWith("+")) {
+      cleaned = "+" + cleaned;
     }
-    
+
     // If it starts with + but not +27, enforce +27
-    if (cleaned.startsWith('+') && !cleaned.startsWith('+27')) {
+    if (cleaned.startsWith("+") && !cleaned.startsWith("+27")) {
       // If user enters just +, add 27
-      if (cleaned === '+') {
-        cleaned = '+27';
-      } else if (cleaned.startsWith('+0')) {
+      if (cleaned === "+") {
+        cleaned = "+27";
+      } else if (cleaned.startsWith("+0")) {
         // If user enters +0, replace with +27
-        cleaned = '+27' + cleaned.substring(2);
-      } else if (cleaned.startsWith('+')) {
+        cleaned = "+27" + cleaned.substring(2);
+      } else if (cleaned.startsWith("+")) {
         // If user enters + followed by other numbers, enforce +27
-        cleaned = '+27' + cleaned.substring(1);
+        cleaned = "+27" + cleaned.substring(1);
       }
     }
-    
+
     // Limit to reasonable length (country code + 9 digits)
     if (cleaned.length > 12) {
       cleaned = cleaned.substring(0, 12);
     }
-    
+
     return cleaned;
   };
 
@@ -78,10 +78,17 @@ export default function SendMoney() {
   const handleVerifyRecipient = async () => {
     try {
       setIsVerifying(true);
-      
+
       // Validate phone number format if phone is selected
-      if (identifierType === "phone" && (!recipientIdentifier.startsWith('+27') || recipientIdentifier.length < 12)) {
-        Alert.alert('Invalid Phone Number', 'Please enter a valid South African phone number starting with +27');
+      if (
+        identifierType === "phone" &&
+        (!recipientIdentifier.startsWith("+27") ||
+          recipientIdentifier.length < 12)
+      ) {
+        Alert.alert(
+          "Invalid Phone Number",
+          "Please enter a valid South African phone number starting with +27"
+        );
         setIsVerifying(false);
         return;
       }

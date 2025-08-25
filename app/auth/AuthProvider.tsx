@@ -26,11 +26,13 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [initialized, setInitialized] = useState<boolean>(false);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session ? session.user : null);
-      setInitialized(true);
-    });
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setSession(session)
+      setUser(session?.user ?? null)
+      setInitialized(true)
+    };
+    init()
   
     const { data: subscription } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
@@ -46,6 +48,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    setSession(null);
+    setUser(null)
   };
 
   const value = {
