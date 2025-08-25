@@ -2,9 +2,11 @@ import { StyleSheet, View, Text, Image, ActivityIndicator } from "react-native";
 import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthProvider";
 import supabase from "../lib/supabase";
+import useUserStore from "../store/useUserStore";
 
 const UserProfile = () => {
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const imageUri = useUserStore((state) => state.profileImageUri)
+  const setImageUri = useUserStore((state) => state.setProfileImageUri)
   const [name, setName] = useState<string | null>(null);
   const { user } = useAuth();
 
